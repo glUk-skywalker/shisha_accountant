@@ -7,12 +7,6 @@ config = Rails.application.config.database_configuration[Rails.env]
 ActiveRecord::Base.establish_connection(config)
 puts "Connected!"
 
-puts "Total rooms count: #{ Room.all.length }"
-puts "Creating a new room..."
-Room.create(name: "room one")
-puts "Total roome count: #{ Room.all.length }"
-puts "The last created room is: #{ Room.last.name }"
-
 require 'telegram/bot'
 
 token = Rails.application.secrets.bot_token
@@ -23,11 +17,13 @@ Telegram::Bot::Client.run(token) do |bot|
     when '/start'
       bot.api.send_message(chat_id: message.chat.id, text: "Hello, #{message.from.first_name}")
     when '/new_shisha'
-      Shisha.create(price: 0)
-      msg_lines = []
-      msg_lines << "yay! created!"
-      msg_lines << "Current shishas count: #{ Shisha.current.length }"
-      bot.api.send_message(chat_id: message.chat.id, text: msg_lines.join("\n"))
+      if Setting.max_shisha_count > Shisha.current.length
+        Shisha.create(price: Setting.default_price)
+        msg = "yay! created!"
+      else
+        msg = "Sorry, maximum amount of shishas reached :("
+      end
+      bot.api.send_message(chat_id: message.chat.id, text: msg)
     when '/stop'
       bot.api.send_message(chat_id: message.chat.id, text: "Bye, #{message.from.first_name}")
     end

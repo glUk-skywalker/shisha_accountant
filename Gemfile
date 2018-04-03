@@ -32,6 +32,9 @@ gem 'jbuilder', '~> 2.5'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+
+gem 'rails-settings-cached', '~> 0.6.6'
+
 group :bot do
   gem 'telegram-bot-ruby', '~> 0.8.6.1', require: false
 end
