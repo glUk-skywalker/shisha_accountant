@@ -10,22 +10,37 @@ puts "Connected!"
 require 'telegram/bot'
 
 token = Rails.application.secrets.bot_token
-
+v = 0
 Telegram::Bot::Client.run(token) do |bot|
   bot.listen do |message|
-    case message.text
-    when '/start'
-      bot.api.send_message(chat_id: message.chat.id, text: "Hello, #{message.from.first_name}")
-    when '/new_shisha'
-      if Setting.max_shisha_count > Shisha.current.length
-        Shisha.create(price: Setting.default_price)
-        msg = "yay! created!"
-      else
-        msg = "Sorry, maximum amount of shishas reached :("
+    case message
+    when Telegram::Bot::Types::CallbackQuery
+      case message.data
+      when '+'
+        v += 1
+      when '-'
+        v -= 1
       end
-      bot.api.send_message(chat_id: message.chat.id, text: msg)
-    when '/stop'
-      bot.api.send_message(chat_id: message.chat.id, text: "Bye, #{message.from.first_name}")
+      kb = [
+        Telegram::Bot::Types::InlineKeyboardButton.new(text: '+', callback_data: '+'),
+        Telegram::Bot::Types::InlineKeyboardButton.new(text: '-', callback_data: '-')
+      ]
+      markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
+      bot.api.edit_message_text(chat_id: message.from.id, message_id: message.message.message_id, text: v.to_s, reply_markup: markup)
+    when Telegram::Bot::Types::Message
+      case message.text
+      when '/start'
+        bot.api.send_message(chat_id: message.chat.id, text: "Hello, #{message.from.first_name}")
+      when '/show_menu'
+        kb = [
+          Telegram::Bot::Types::InlineKeyboardButton.new(text: '+', callback_data: '+'),
+          Telegram::Bot::Types::InlineKeyboardButton.new(text: '-', callback_data: '-')
+        ]
+        markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
+        bot.api.send_message(chat_id: message.chat.id, text: v.to_s, reply_markup: markup)
+      when '/stop'
+        bot.api.send_message(chat_id: message.chat.id, text: "Bye, #{message.from.first_name}")
+      end
     end
   end
 end
