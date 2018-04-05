@@ -16,21 +16,34 @@ Telegram::Bot::Client.run(token) do |bot|
   bot.listen do |message|
     case message
     when Telegram::Bot::Types::CallbackQuery
+      processing_params = {
+        chat_id: message.from.id,
+        message_id: message.message.message_id,
+        text: '↻ Working..',
+        reply_markup: Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
+      }
+      bot.api.edit_message_text(processing_params)
+
       case message.data
-      when '+'
-        v += 1
-      when '-'
-        v -= 1
+      when 'create'
+        Shisha.create(price: Setting.default_price) if Shisha.current.length < Setting.max_shisha_count
+      when /join:\d+/
+        puts "Joining #{ message.data.split(':').last }..."
+      when /stop:\d+/
+        shisha_id = message.data.split(':').last
+        puts "Stopping #{ message.data.split(':').last }..."
+        Shisha.find(shisha_id).update_attributes(current: false)
+        puts "Stopped"
       when '↻'
-        bot.api.edit_message_text(chat_id: message.from.id, message_id: message.message.message_id, text: '↻ Refreshing...')
       end
+
       markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
       bot.api.edit_message_text(chat_id: message.from.id, message_id: message.message.message_id, text: v.to_s, reply_markup: markup)
     when Telegram::Bot::Types::Message
       case message.text
       when '/start'
         bot.api.send_message(chat_id: message.from.id, text: "Hello, #{message.from.first_name}")
-      when '/show_menu'
+      when '/menu'
         markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
         bot.api.send_message(chat_id: message.from.id, text: v.to_s, reply_markup: markup)
       when '/stop'
