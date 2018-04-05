@@ -11,7 +11,7 @@ require 'telegram/bot'
 require './bot/lib/kb'
 
 token = Rails.application.secrets.bot_token
-
+v = Shisha.current.length
 Telegram::Bot::Client.run(token) do |bot|
   bot.listen do |message|
     user = User.where(id: message.from.id).first
@@ -33,13 +33,18 @@ Telegram::Bot::Client.run(token) do |bot|
           user.create_shisha
         end
       when /join:\d+/
+        shisha_id = message.data.split(':').last
+        s = Shisha.where(shisha_id).first
+        if s
+          UserShisha.create(user_id: user.id, shisha_id: s.id)
+        end
       when 'leave'
         s = user.current_shisha
         UserShisha.where(user_id: user.id, shisha_id: s.id).first.destroy
         s.destroy unless s.users.any?
       when /stop:\d+/
         shisha_id = message.data.split(':').last
-         s = Shisha.where(shisha_id).first
+        s = Shisha.where(shisha_id).first
         s.update_attributes(current: false) if s
         puts "Stopped"
       when '↻'

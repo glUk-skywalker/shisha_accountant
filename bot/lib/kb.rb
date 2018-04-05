@@ -11,8 +11,7 @@ def kb(user)
   else
     Shisha.current.each do |s|
       keyset << [
-        Telegram::Bot::Types::InlineKeyboardButton.new(text: "Join #{ s.id }", callback_data: "join:#{ s.id }"),
-        Telegram::Bot::Types::InlineKeyboardButton.new(text: "Stop #{ s.id }", callback_data: "stop:#{ s.id }")
+        Telegram::Bot::Types::InlineKeyboardButton.new(text: "Join #{ s.id }", callback_data: "join:#{ s.id }")
       ]
     end
 
