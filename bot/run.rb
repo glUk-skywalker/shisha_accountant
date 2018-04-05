@@ -9,9 +9,11 @@ puts "Connected!"
 
 require 'telegram/bot'
 require './bot/lib/kb'
+require './bot/lib/msg'
+require './bot/lib/helpers'
 
 token = Rails.application.secrets.bot_token
-v = Shisha.current.length
+
 Telegram::Bot::Client.run(token) do |bot|
   bot.listen do |message|
     user = User.where(id: message.from.id).first
@@ -40,8 +42,10 @@ Telegram::Bot::Client.run(token) do |bot|
         end
       when 'leave'
         s = user.current_shisha
-        UserShisha.where(user_id: user.id, shisha_id: s.id).first.destroy
-        s.destroy unless s.users.any?
+        if s
+          UserShisha.where(user_id: user.id, shisha_id: s.id).first.destroy
+          s.destroy unless s.users.any?
+        end
       when /stop:\d+/
         shisha_id = message.data.split(':').last
         s = Shisha.where(shisha_id).first
@@ -51,14 +55,14 @@ Telegram::Bot::Client.run(token) do |bot|
       end
 
       markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb(user))
-      bot.api.edit_message_text(chat_id: message.from.id, message_id: message.message.message_id, text: Shisha.current.length, reply_markup: markup)
+      bot.api.edit_message_text(chat_id: message.from.id, message_id: message.message.message_id, text: msg(user), reply_markup: markup)
     when Telegram::Bot::Types::Message
       case message.text
       when '/start'
         bot.api.send_message(chat_id: message.from.id, text: "Hello, #{message.from.first_name}")
       when '/menu'
         markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb(user))
-        bot.api.send_message(chat_id: message.from.id, text: v.to_s, reply_markup: markup)
+        bot.api.send_message(chat_id: message.from.id, text: msg(user), reply_markup: markup)
       when '/stop'
         bot.api.send_message(chat_id: message.from.id, text: "Bye, #{message.from.first_name}")
       end

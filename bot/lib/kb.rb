@@ -10,8 +10,12 @@ def kb(user)
     keyset << Telegram::Bot::Types::InlineKeyboardButton.new(button_params)
   else
     Shisha.current.each do |s|
+      button_params = {
+        text: "Join #{ s.users.map(&:first_name).to_sentence }",
+        callback_data: "join:#{ s.id }"
+      }
       keyset << [
-        Telegram::Bot::Types::InlineKeyboardButton.new(text: "Join #{ s.id }", callback_data: "join:#{ s.id }")
+        Telegram::Bot::Types::InlineKeyboardButton.new(button_params)
       ]
     end
 
