@@ -1,6 +1,6 @@
 def msg(user)
   s = user.current_shisha
-  if s
+  msg = if s
     other_users = s.users.to_a - [user]
     if other_users.any?
       "You are smoking with #{ other_users.map(&:first_name).to_sentence }"
@@ -10,4 +10,6 @@ def msg(user)
   else
     "Join the fellas or set up a new shisha!!"
   end
+
+  msg + "\n\nMoney: #{ user.money }"
 end
