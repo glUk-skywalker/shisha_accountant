@@ -31,7 +31,7 @@ Telegram::Bot::Client.run(token) do |bot|
 
       case message.data
       when 'create'
-        if Shisha.current.length < Setting.max_shisha_count && user.shishas.current.length == 0
+        if new_shisha_available? && !user.current_shisha
           user.create_shisha
         end
       when /join:\d+/
