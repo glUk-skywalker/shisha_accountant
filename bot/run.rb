@@ -22,7 +22,7 @@ Telegram::Bot::Client.run(token) do |bot|
       processing_params = {
         chat_id: message.from.id,
         message_id: message.message.message_id,
-        text: '↻ Working...',
+        text: '↻ Working..',
         reply_markup: Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
       }
       bot.api.edit_message_text(processing_params)
@@ -30,8 +30,7 @@ Telegram::Bot::Client.run(token) do |bot|
       case message.data
       when 'create'
         if Shisha.current.length < Setting.max_shisha_count && user.shishas.current.length == 0
-          s = Shisha.create(price: Setting.default_price)
-          s.user_shishas.create(user_id: user.id)
+          user.create_shisha
         end
       when /join:\d+/
         puts "Joining #{ message.data.split(':').last }..."
