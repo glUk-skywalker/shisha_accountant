@@ -34,6 +34,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'capistrano-rails', group: :development
 
 gem 'rails-settings-cached', '~> 0.6.6'
+gem 'composite_primary_keys', '~> 10.0', '>= 10.0.3'
 
 group :bot do
   gem 'telegram-bot-ruby', '~> 0.8.6.1', require: false

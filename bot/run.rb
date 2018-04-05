@@ -15,32 +15,31 @@ v = 0
 Telegram::Bot::Client.run(token) do |bot|
   bot.listen do |message|
     user = User.where(id: message.from.id).first
-    if user
-      puts "User exists!"
-    else
-      puts "New user! Registering"
-      User.create(message.from.to_h)
-    end
+    user ||= User.create(message.from.to_h)
 
     case message
     when Telegram::Bot::Types::CallbackQuery
       processing_params = {
         chat_id: message.from.id,
         message_id: message.message.message_id,
-        text: '↻ Working..',
+        text: '↻ Working...',
         reply_markup: Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb)
       }
       bot.api.edit_message_text(processing_params)
 
       case message.data
       when 'create'
-        Shisha.create(price: Setting.default_price) if Shisha.current.length < Setting.max_shisha_count
+        if Shisha.current.length < Setting.max_shisha_count && user.shishas.current.length == 0
+          s = Shisha.create(price: Setting.default_price)
+          s.user_shishas.create(user_id: user.id)
+        end
       when /join:\d+/
         puts "Joining #{ message.data.split(':').last }..."
       when /stop:\d+/
         shisha_id = message.data.split(':').last
         puts "Stopping #{ message.data.split(':').last }..."
-        Shisha.find(shisha_id).update_attributes(current: false)
+        s = Shisha.where(shisha_id).first
+        s.update_attributes(current: false) if s
         puts "Stopped"
       when '↻'
       end

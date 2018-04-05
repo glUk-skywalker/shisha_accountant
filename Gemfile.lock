@@ -66,6 +66,8 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.12.2)
+    composite_primary_keys (10.0.3)
+      activerecord (~> 5.1.0, >= 5.1.5)
     concurrent-ruby (1.0.5)
     crass (1.0.3)
     descendants_tracker (0.0.4)
@@ -203,6 +205,7 @@ DEPENDENCIES
   byebug
   capybara (~> 2.13)
   coffee-rails (~> 4.2)
+  composite_primary_keys (~> 10.0, >= 10.0.3)
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
   mysql2 (>= 0.3.18, < 0.5)

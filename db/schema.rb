@@ -10,32 +10,39 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180405152618) do
+ActiveRecord::Schema.define(version: 20180405153928) do
 
-  create_table "rooms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
-    t.string "name", collation: "utf8mb4_unicode_ci"
+  create_table "rooms", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "settings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
-    t.string "var", limit: 191, null: false, collation: "utf8mb4_unicode_ci"
-    t.text "value", collation: "utf8mb4_unicode_ci"
+  create_table "settings", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.string "var", null: false
+    t.text "value"
     t.integer "thing_id"
-    t.string "thing_type", limit: 30, collation: "utf8mb4_unicode_ci"
+    t.string "thing_type", limit: 30
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["thing_type", "thing_id", "var"], name: "index_settings_on_thing_type_and_thing_id_and_var", unique: true
   end
 
-  create_table "shishas", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+  create_table "shishas", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.decimal "price", precision: 10, null: false
     t.boolean "current", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "users", id: :decimal, precision: 10, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4" do |t|
+  create_table "user_shishas", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.decimal "user_id", precision: 10, null: false
+    t.decimal "shisha_id", precision: 10, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "users", id: :decimal, precision: 10, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.boolean "is_bot", null: false
     t.string "first_name", null: false
     t.string "last_name", null: false
