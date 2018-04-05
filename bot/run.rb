@@ -46,11 +46,9 @@ Telegram::Bot::Client.run(token) do |bot|
           UserShisha.where(user_id: user.id, shisha_id: s.id).first.destroy
           s.destroy unless s.users.any?
         end
-      when /stop:\d+/
-        shisha_id = message.data.split(':').last
-        s = Shisha.where(shisha_id).first
-        s.update_attributes(current: false) if s
-        puts "Stopped"
+      when 'stop'
+        s = user.current_shisha
+        s.stop! if s
       when '↻'
       end
 

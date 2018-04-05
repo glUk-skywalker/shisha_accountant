@@ -3,11 +3,18 @@ def kb(user)
 
   s = user.current_shisha
   if s
+    key_row = []
     button_params = {
       text: "Leave",
       callback_data: "leave"
     }
-    keyset << Telegram::Bot::Types::InlineKeyboardButton.new(button_params)
+    key_row << Telegram::Bot::Types::InlineKeyboardButton.new(button_params)
+    button_params = {
+      text: "Finish smoking",
+      callback_data: "stop"
+    }
+    key_row << Telegram::Bot::Types::InlineKeyboardButton.new(button_params)
+    keyset << key_row
   else
     Shisha.current.each do |s|
       button_params = {
