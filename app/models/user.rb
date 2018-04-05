@@ -6,4 +6,8 @@ class User < ApplicationRecord
     s = Shisha.create(price: Setting.default_price)
     s.user_shishas.create(user_id: id, shisha_id: s.id)
   end
+
+  def current_shisha
+    shishas.current.first
+  end
 end
