@@ -44,9 +44,9 @@ ActiveRecord::Schema.define(version: 20180405153928) do
 
   create_table "users", id: :decimal, precision: 10, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.boolean "is_bot", null: false
-    t.string "first_name", null: false
-    t.string "last_name", null: false
-    t.string "username", null: false
+    t.string "first_name"
+    t.string "last_name"
+    t.string "username"
     t.string "language_code", null: false
     t.decimal "money", precision: 10, default: "0", null: false
     t.datetime "created_at", null: false
