@@ -14,6 +14,14 @@ token = Rails.application.secrets.bot_token
 v = 0
 Telegram::Bot::Client.run(token) do |bot|
   bot.listen do |message|
+    user = User.where(id: message.from.id).first
+    if user
+      puts "User exists!"
+    else
+      puts "New user! Registering"
+      User.create(message.from.to_h)
+    end
+
     case message
     when Telegram::Bot::Types::CallbackQuery
       processing_params = {

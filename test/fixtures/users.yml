@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 
+  is_bot: 
+  first_name: 
+  last_name: 
+  username: 
+  language_code: 
+  money: 
+
+two:
+  id: 
+  is_bot: 
+  first_name: 
+  last_name: 
+  username: 
+  language_code: 
+  money: 
