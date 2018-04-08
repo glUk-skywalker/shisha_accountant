@@ -36,7 +36,7 @@ Telegram::Bot::Client.run(token) do |bot|
         end
       when /join:\d+/
         shisha_id = message.data.split(':').last
-        s = Shisha.where(shisha_id).first
+        s = Shisha.where(id: shisha_id).first
         if s
           UserShisha.create(user_id: user.id, shisha_id: s.id)
         end
