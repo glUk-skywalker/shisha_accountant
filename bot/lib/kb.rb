@@ -16,16 +16,14 @@ def kb(user)
     key_row << Telegram::Bot::Types::InlineKeyboardButton.new(button_params)
     keyset << key_row
   else
-    Shisha.current.each do |s|
-      if s.has_slots?
-        button_params = {
-          text: "Join #{ s.users.map(&:first_name).to_sentence }",
-          callback_data: "join:#{ s.id }"
-        }
-        keyset << [
-          Telegram::Bot::Types::InlineKeyboardButton.new(button_params)
-        ]
-      end
+    Shisha.joinable.each do |s|
+      button_params = {
+        text: "Join #{ s.users.map(&:first_name).to_sentence }",
+        callback_data: "join:#{ s.id }"
+      }
+      keyset << [
+        Telegram::Bot::Types::InlineKeyboardButton.new(button_params)
+      ]
     end
 
     if new_shisha_available?
