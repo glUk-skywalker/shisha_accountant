@@ -17,17 +17,23 @@ def kb(user)
     keyset << key_row
   else
     Shisha.current.each do |s|
-      button_params = {
-        text: "Join #{ s.users.map(&:first_name).to_sentence }",
-        callback_data: "join:#{ s.id }"
-      }
-      keyset << [
-        Telegram::Bot::Types::InlineKeyboardButton.new(button_params)
-      ]
+      if s.has_slots?
+        button_params = {
+          text: "Join #{ s.users.map(&:first_name).to_sentence }",
+          callback_data: "join:#{ s.id }"
+        }
+        keyset << [
+          Telegram::Bot::Types::InlineKeyboardButton.new(button_params)
+        ]
+      end
     end
 
-    if Shisha.current.length < Setting.max_shisha_count
-      keyset << Telegram::Bot::Types::InlineKeyboardButton.new(text: "Set up new!", callback_data: 'create')
+    if new_shisha_available?
+      button_params = {
+        text: "Set up new!",
+        callback_data: 'create'
+      }
+      keyset << Telegram::Bot::Types::InlineKeyboardButton.new(button_params)
     end
   end
 
