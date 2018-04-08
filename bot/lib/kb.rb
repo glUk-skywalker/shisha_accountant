@@ -3,18 +3,7 @@ def kb(user)
 
   s = user.current_shisha
   if s
-    key_row = []
-    button_params = {
-      text: "Leave",
-      callback_data: "leave"
-    }
-    key_row << Telegram::Bot::Types::InlineKeyboardButton.new(button_params)
-    button_params = {
-      text: "Finish smoking",
-      callback_data: "stop"
-    }
-    key_row << Telegram::Bot::Types::InlineKeyboardButton.new(button_params)
-    keyset << key_row
+    keyset << [button(:leave), button(:finish)]
   else
     Shisha.joinable.each do |s|
       button_params = {
@@ -26,14 +15,8 @@ def kb(user)
       ]
     end
 
-    if new_shisha_available?
-      button_params = {
-        text: "Set up new!",
-        callback_data: 'create'
-      }
-      keyset << Telegram::Bot::Types::InlineKeyboardButton.new(button_params)
-    end
+    keyset << button(:create) if new_shisha_available?
   end
 
-  keyset << Telegram::Bot::Types::InlineKeyboardButton.new(text: '↻', callback_data: '↻')
+  keyset << button(:refresh)
 end

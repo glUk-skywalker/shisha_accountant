@@ -8,6 +8,7 @@ ActiveRecord::Base.establish_connection(config)
 puts "Connected!"
 
 require 'telegram/bot'
+require './bot/lib/button'
 require './bot/lib/kb'
 require './bot/lib/msg'
 require './bot/lib/helpers'
