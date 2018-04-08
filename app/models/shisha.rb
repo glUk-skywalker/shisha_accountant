@@ -10,6 +10,10 @@ class Shisha < ApplicationRecord
     end
   end
 
+  def has_slots?
+    users.length < Setting.max_shisha_slots
+  end
+
   private
 
   def pay_off!
