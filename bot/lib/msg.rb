@@ -10,9 +10,11 @@ def msg(user)
     end
   end
 
-  if msg_lines.any?
+  msg = if msg_lines.any?
     "Currently smoking:\n" + msg_lines.map{ |l| '◦ ' + l }.join("\n")
   else
     "No one is smoking now"
   end
+
+  msg << "\n\nMoney: #{user.money}"
 end
