@@ -1,15 +1,18 @@
 def msg(user)
-  s = user.current_shisha
-  msg = if s
-    other_users = s.users.to_a - [user]
-    if other_users.any?
-      "You are smoking with #{ other_users.map(&:first_name).to_sentence }"
+  msg_lines = []
+  Shisha.current.each do |s|
+    shisha_users = s.users
+    if shisha_users.include?(user)
+      other_users = shisha_users - [user]
+      msg_lines << (["You"] + other_users.map(&:first_name)).to_sentence
     else
-      "You are smoking alone"
+      msg_lines << shisha_users.map(&:first_name).to_sentence
     end
-  else
-    "Join the fellas or set up a new shisha!!"
   end
 
-  msg + "\n\nMoney: #{ user.money }"
+  if msg_lines.any?
+    "Currently smoking:\n" + msg_lines.map{ |l| '◦ ' + l }.join("\n")
+  else
+    "No one is smoking now"
+  end
 end
