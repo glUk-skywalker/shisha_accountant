@@ -1,4 +1,5 @@
 def kb(user)
+  return [button(:refresh)] unless user.allowed
   keyset = []
 
   s = user.current_shisha

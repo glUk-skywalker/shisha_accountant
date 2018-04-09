@@ -1,4 +1,15 @@
 def msg(user)
+  if !user.allowed
+    msg =
+    <<~HEREDOC
+      Sorry.. You are not allowed to use this bot yet :(
+      The request on your participation has been sent to the owner.
+      Please, wait until he accepts it.
+      Thanks for you patience! :)
+    HEREDOC
+    return msg
+  end
+
   msg_lines = []
   Shisha.current.each do |s|
     shisha_users = s.users
