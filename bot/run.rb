@@ -51,6 +51,9 @@ Telegram::Bot::Client.run(token) do |bot|
         s = user.current_shisha
         s.stop! if s
         user.reload
+      when /accept_user:\d+/
+        user_id = message.data.split(':').last
+        User.find(user_id).update_attributes(allowed: true)
       when '↻'
       end
 
