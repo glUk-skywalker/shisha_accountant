@@ -50,6 +50,7 @@ Telegram::Bot::Client.run(token) do |bot|
       when 'stop'
         s = user.current_shisha
         s.stop! if s
+        user.reload
       when '↻'
       end
 
