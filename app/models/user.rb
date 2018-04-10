@@ -2,7 +2,7 @@ class User < ApplicationRecord
   has_many :user_shishas, foreign_key: :user_id
   has_many :shishas, through: :user_shishas
 
-  after_create :request_accept
+  after_create :request_accept_or_promote
 
   def create_shisha
     s = Shisha.create(price: Setting.default_price)
@@ -15,9 +15,21 @@ class User < ApplicationRecord
 
   private
 
+  def should_be_promoted?
+    Rails.application.secrets.super_admin_ids.include? id
+  end
+
+  def request_accept_or_promote
+    if should_be_promoted?
+      update_attributes(allowed: true, super_admin: true)
+    else
+      request_accept
+    end
+  end
+
   def request_accept
     require 'telegram/bot'
-    
+
     button_params = {
       text: "Accept",
       callback_data: "accept_user:#{id}"
