@@ -36,6 +36,7 @@ gem 'jbuilder', '~> 2.5'
 
 gem 'rails-settings-cached', '~> 0.6.6'
 gem 'composite_primary_keys', '~> 10.0', '>= 10.0.3'
+gem 'haml', '~> 5.0', '>= 5.0.4'
 
 group :bot do
   gem 'telegram-bot-ruby', '~> 0.8.6.1', require: false
