@@ -13,3 +13,10 @@
  *= require_tree .
  *= require_self
  */
+
+#login-btn{
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  margin-left: -119px;
+}

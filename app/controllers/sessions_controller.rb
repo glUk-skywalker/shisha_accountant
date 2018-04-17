@@ -1,6 +1,6 @@
 class SessionsController < ApplicationController
   def new
-    # redirect_to '' unless current_user
+    redirect_to :root if current_user
   end
 
   def create
