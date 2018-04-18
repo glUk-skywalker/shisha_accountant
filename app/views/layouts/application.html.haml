@@ -8,4 +8,4 @@
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   %body{ style: 'margin: 0px;' }
     = render 'layouts/navbar' if current_user
-    = yield
+    #content= yield

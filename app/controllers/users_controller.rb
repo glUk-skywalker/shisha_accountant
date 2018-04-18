@@ -1,5 +1,5 @@
 class UsersController < AuthenticatedUserController
   def show
-    @user = current_user
+    @user_shsihas = current_user.shishas.to_a
   end
 end

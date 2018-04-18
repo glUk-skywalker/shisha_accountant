@@ -1,0 +1,5 @@
+%table#shisha-table
+  %tbody
+  - @user_shsihas.each do |s|
+    %tr
+      %td= s.users.map(&:first_name).to_sentence

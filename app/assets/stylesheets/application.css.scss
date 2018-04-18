@@ -66,3 +66,15 @@
     color: black;
   }
 }
+
+#content {
+  padding-top: 50px;
+  width: 70%;
+  margin: auto;
+
+  #shishas-table {
+    %tr {
+      width: 100%;
+    }
+  }
+}
