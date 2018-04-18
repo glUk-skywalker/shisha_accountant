@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
 
   def create
     user = User.where(id: params[:id]).first
-    user ||= User.create(params.slice(:id, :first_name, :last_name, :username))
+    user ||= User.create(user_params)
     session[:current_user_id] = user.id
     redirect_to :root
   end
@@ -13,5 +13,11 @@ class SessionsController < ApplicationController
   def destroy
     session[:current_user_id] = nil
     redirect_to signin_path
+  end
+
+  private
+
+  def user_params
+    params.permit(:id, :first_name, :last_name, :username, :photo_url)
   end
 end

@@ -1,0 +1,68 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+* {
+  font-family: Verdana, Geneva, sans-serif;
+}
+
+#login-btn{
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  margin-left: -119px;
+}
+
+#navbar {
+  overflow: hidden;
+  background-color: #333;
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  width: 100%; /* Full width */
+
+
+  & .navitem {
+    float: left;
+    display: inline-block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    &.right {
+      float: right;
+    }
+    &.ava {
+      border-radius: 30px;
+      padding: 5px 5px;
+      width: 36px;
+      height: 36px;
+    }
+    &.logout {
+      padding: 0px 5px;
+      vertical-align: middle;
+      & > img {
+        padding: 12px 0px 10px 0px;
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+
+  /* Change background on mouse-over */
+  & a:hover {
+    background: #ddd;
+    color: black;
+  }
+}
