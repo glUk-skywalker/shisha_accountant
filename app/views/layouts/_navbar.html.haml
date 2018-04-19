@@ -1,4 +1,6 @@
 #navbar
   = link_to(image_tag('logout-icon.png'), signout_path, class: 'navitem right logout', title: 'Logout') if current_user
+  .navitem.right
+    = current_user.money.to_s + ' RUR'
   .navitem.right= current_user.first_name
   = image_tag current_user.photo_url, alt: 'ava', class: 'navitem right ava'
