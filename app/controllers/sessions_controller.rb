@@ -5,7 +5,11 @@ class SessionsController < ApplicationController
 
   def create
     user = User.where(id: params[:id]).first
-    user ||= User.create(user_params)
+    if user
+      user.update_attributes(user_params)
+    else
+      user = User.create(user_params)
+    end
     session[:current_user_id] = user.id
     redirect_to :root
   end
