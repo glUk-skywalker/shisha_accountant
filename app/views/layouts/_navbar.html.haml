@@ -4,3 +4,5 @@
     = current_user.money.to_s + ' RUR'
   .navitem.right= current_user.first_name
   = image_tag current_user.photo_url, alt: 'ava', class: 'navitem right ava'
+  - if current_user.current_shisha
+    = image_tag 'shisha-icon.png', class: 'navitem right smoking-now-ico', title: 'Smoking now'
