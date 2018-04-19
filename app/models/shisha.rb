@@ -15,6 +15,10 @@ class Shisha < ApplicationRecord
     users.length < Setting.max_shisha_slots
   end
 
+  def self.available?
+    Shisha.current.length < Setting.max_shisha_count
+  end
+
   private
 
   def pay_off!

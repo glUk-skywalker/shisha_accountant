@@ -5,4 +5,6 @@ Rails.application.routes.draw do
   match 'signin', to: 'sessions#new', via: :get, as: 'signin'
   match 'auth', to: 'sessions#create', via: :get, as: 'auth'
   match 'signout', to: 'sessions#destroy', via: :get, as: 'signout'
+
+  resources :shishas, only: [:new]
 end

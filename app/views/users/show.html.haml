@@ -1,3 +1,7 @@
+- if @current_shisha
+  smoking now
+- else
+  = link_to 'Set up a new shisha!', new_shisha_path, class: 'create-shisha-button'
 %table#shisha-table
   %tbody
   - @user_shsihas.each do |s|

@@ -16,7 +16,7 @@ def kb(user)
       ]
     end
 
-    keyset << button(:create) if new_shisha_available?
+    keyset << button(:create) if Shisha.available?
   end
 
   keyset << button(:refresh)

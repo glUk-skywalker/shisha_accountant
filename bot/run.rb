@@ -11,7 +11,6 @@ require 'telegram/bot'
 require './bot/lib/button'
 require './bot/lib/kb'
 require './bot/lib/msg'
-require './bot/lib/helpers'
 
 token = Rails.application.secrets.bot_token
 
@@ -32,7 +31,7 @@ Telegram::Bot::Client.run(token) do |bot|
 
       case message.data
       when 'create'
-        if new_shisha_available? && !user.current_shisha
+        if Shisha.available? && !user.current_shisha
           user.create_shisha
         end
       when /join:\d+/
