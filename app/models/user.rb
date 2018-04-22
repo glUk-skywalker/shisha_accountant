@@ -16,7 +16,7 @@ class User < ApplicationRecord
   private
 
   def should_be_promoted?
-    Rails.application.secrets.super_admin_ids.include? id
+    Rails.application.secrets.super_admin_ids.to_a.include? id
   end
 
   def request_accept_or_promote
