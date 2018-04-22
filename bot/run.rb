@@ -29,31 +29,33 @@ Telegram::Bot::Client.run(token) do |bot|
       }
       bot.api.edit_message_text(processing_params)
 
-      case message.data
-      when 'create'
-        if Shisha.available? && !user.current_shisha
-          user.create_shisha
+      if user.allowed
+        case message.data
+        when 'create'
+          if Shisha.available? && !user.current_shisha
+            user.create_shisha
+          end
+        when /join:\d+/
+          shisha_id = message.data.split(':').last
+          s = Shisha.where(id: shisha_id).first
+          if s && s.current && s.has_slots?
+            UserShisha.create(user_id: user.id, shisha_id: s.id)
+          end
+        when 'leave'
+          s = user.current_shisha
+          if s
+            UserShisha.where(user_id: user.id, shisha_id: s.id).first.destroy
+            s.destroy unless s.users.any?
+          end
+        when 'stop'
+          s = user.current_shisha
+          s.stop! if s
+          user.reload
+        when /accept_user:\d+/
+          user_id = message.data.split(':').last
+          User.find(user_id).update_attributes(allowed: true)
+        when '↻'
         end
-      when /join:\d+/
-        shisha_id = message.data.split(':').last
-        s = Shisha.where(id: shisha_id).first
-        if s && s.current && s.has_slots?
-          UserShisha.create(user_id: user.id, shisha_id: s.id)
-        end
-      when 'leave'
-        s = user.current_shisha
-        if s
-          UserShisha.where(user_id: user.id, shisha_id: s.id).first.destroy
-          s.destroy unless s.users.any?
-        end
-      when 'stop'
-        s = user.current_shisha
-        s.stop! if s
-        user.reload
-      when /accept_user:\d+/
-        user_id = message.data.split(':').last
-        User.find(user_id).update_attributes(allowed: true)
-      when '↻'
       end
 
       markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb(user))
