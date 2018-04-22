@@ -115,3 +115,14 @@
     }
   }
 }
+
+.user-panel {
+  display: inline-block;
+  padding: 5px 5px;
+  .ava {
+    vertical-align: middle;
+    border-radius: 30px;
+    width: 36px;
+    height: 36px;
+  }
+}

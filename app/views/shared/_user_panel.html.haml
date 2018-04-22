@@ -1,0 +1,4 @@
+.user-panel
+  - if user.photo_url
+    = image_tag user.photo_url, class: 'ava'
+  %span= user == current_user ? 'You' : user.first_name
