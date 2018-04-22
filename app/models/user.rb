@@ -13,6 +13,11 @@ class User < ApplicationRecord
     shishas.current.first
   end
 
+  def photo_url
+    url = read_attribute(:photo_url)
+    url ? url : 'dummy-ava.png'
+  end
+
   private
 
   def should_be_promoted?
