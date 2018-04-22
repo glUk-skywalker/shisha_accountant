@@ -2,8 +2,15 @@
   smoking now
 - else
   = link_to 'Set up a new shisha!', new_shisha_path, class: 'create-shisha-button'
-%table#shisha-table
+%table.shisha-table
   %tbody
   - @user_shsihas.each do |s|
     %tr
-      %td= s.users.map(&:first_name).to_sentence
+      %td
+        = s.created_at
+      %td
+        - s.users.each do |u|
+          = render partial: 'shared/user_panel', locals: { user: u }
+      %td
+        = '-'
+        = s.price.to_f / s.users.length
