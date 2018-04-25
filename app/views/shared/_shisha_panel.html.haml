@@ -1,0 +1,10 @@
+.shisha-panel{ class: shisha.current ? 'current' : '' }
+  .date= shisha.created_at.strftime("%A, %d %B %Y, %H:%M")
+  .users
+    - shisha.users.each do |u|
+      = render partial: 'shared/user_panel', locals: { user: u }
+  .action
+    - if shisha.current
+      = link_to 'Stop smoking', stop_shisha_path(shisha), class: 'button'
+    - else
+      = "- #{shisha.price.to_f / shisha.users.length}"

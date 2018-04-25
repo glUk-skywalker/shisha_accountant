@@ -1,16 +1,5 @@
-- if @current_shisha
-  smoking now
-- else
-  = link_to 'Set up a new shisha!', new_shisha_path, class: 'create-shisha-button'
-%table.shisha-table
-  %tbody
+- unless current_user.current_shisha
+  = link_to 'Set up a new shisha!', new_shisha_path, class: 'button create-shisha-button'
+.shisha-list
   - @user_shsihas.each do |s|
-    %tr
-      %td
-        = s.created_at
-      %td
-        - s.users.each do |u|
-          = render partial: 'shared/user_panel', locals: { user: u }
-      %td
-        = '-'
-        = s.price.to_f / s.users.length
+    = render 'shared/shisha_panel', shisha: s

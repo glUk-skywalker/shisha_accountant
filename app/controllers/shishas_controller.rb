@@ -5,4 +5,10 @@ class ShishasController < AuthenticatedUserController
     end
     redirect_to request.referer
   end
+
+  def stop
+    s = Shisha.current.where(id: params[:id]).first
+    s.stop! if s
+    redirect_to request.referer
+  end
 end
