@@ -149,4 +149,14 @@
     width: 36px;
     height: 36px;
   }
+  .smoking-badge {
+    z-index: 1;
+    position: absolute;
+    border-radius: 30px;
+    margin-top: 17px;
+    margin-left: -20px;
+    padding: 5px 5px;
+    width: 15px;
+    height: 15px;
+  }
 }

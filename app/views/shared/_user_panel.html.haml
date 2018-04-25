@@ -1,4 +1,6 @@
 .user-panel
   - if user.photo_url
     = image_tag user.photo_url, class: 'ava'
+  - if user.current_shisha
+    = image_tag 'shisha-icon.png', class: 'smoking-badge', title: 'Smoking now'
   %span= user == current_user ? 'You' : user.first_name
