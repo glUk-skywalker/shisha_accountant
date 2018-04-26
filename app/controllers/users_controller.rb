@@ -4,6 +4,6 @@ class UsersController < AuthenticatedUserController
   end
 
   def index
-    @users = User.all
+    @users = User.all.order(money: :asc)
   end
 end

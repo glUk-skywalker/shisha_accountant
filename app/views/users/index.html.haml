@@ -1,3 +1,11 @@
-%ul
+%table
   - @users.each do |u|
-    %li= u.first_name.to_s + ': ' + u.money.to_s
+    %tr
+      %td
+        - name = ''
+        - name << u.first_name || ''
+        - name << ' @' + u.username if u.username
+        - name << ' ' + u.last_name if u.last_name
+        = name
+      %td
+        = u.money.to_s
