@@ -1,6 +1,6 @@
 class CreateLoginTokens < ActiveRecord::Migration[5.1]
   def change
-    create_table :login_tokens, id: false do |t|
+    create_table :login_tokens do |t|
       t.numeric :user_id, null: false
       t.string :token, null: false
 
