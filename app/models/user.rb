@@ -18,6 +18,10 @@ class User < ApplicationRecord
     url ? url : 'dummy-ava.png'
   end
 
+  def draw
+    @decorator ||= UserDecorator.new(self)
+  end
+
   private
 
   def should_be_promoted?

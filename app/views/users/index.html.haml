@@ -2,10 +2,6 @@
   - @users.each do |u|
     %tr
       %td
-        - name = ''
-        - name << u.first_name || ''
-        - name << ' @' + u.username if u.username
-        - name << ' ' + u.last_name if u.last_name
-        = name
+        = render 'shared/user_panel', user: u, show: [:first_name, :username, :last_name]
       %td
-        = u.money.to_s
+        = u.money

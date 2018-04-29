@@ -2,7 +2,7 @@
   .date= shisha.created_at.strftime("%A, %d %B %Y, %H:%M")
   .users
     - shisha.users.each do |u|
-      = render partial: 'shared/user_panel', locals: { user: u }
+      = render 'shared/user_panel', user: u, show: [:first_name]
   .action
     - if shisha.current
       = link_to 'Stop smoking', stop_shisha_path(shisha), class: 'button'
