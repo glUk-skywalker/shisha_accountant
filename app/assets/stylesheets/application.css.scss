@@ -160,3 +160,10 @@
     height: 15px;
   }
 }
+
+#users-table {
+  width: 100%;
+  .money.negative {
+    color: red
+  }
+}

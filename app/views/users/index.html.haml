@@ -1,7 +1,7 @@
-%table
+%table#users-table
   - @users.each do |u|
     %tr
       %td
         = render 'shared/user_panel', user: u, show: [:first_name, :username, :last_name]
       %td
-        = u.money
+        .money{ class: u.money <= 0 ? 'negative' : '' }= u.money
