@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   match 'auth', to: 'sessions#create', via: :get, as: 'auth'
   match 'signout', to: 'sessions#destroy', via: :get, as: 'signout'
 
-  resources :users, only: [:index]
+  resources :users, only: [:index, :edit, :update]
 
   resources :shishas, only: [:new]
   get 'stop_shisha/:id', to: 'shishas#stop', as: 'stop_shisha'
