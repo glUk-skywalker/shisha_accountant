@@ -5,5 +5,6 @@
         = render 'shared/user_panel', user: u, show: [:first_name, :username, :last_name]
       %td
         .money{ class: u.money <= 0 ? 'negative' : '' }= u.money
-      %td
-        = link_to 'Put money', edit_user_path(u)
+      - if current_user.super_admin?
+        %td
+          = link_to 'Put money', edit_user_path(u)
