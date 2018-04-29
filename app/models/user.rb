@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_many :user_shishas, foreign_key: :user_id
   has_many :shishas, through: :user_shishas
+  has_one :login_token
 
   after_create :request_accept_or_promote
 
@@ -16,6 +17,16 @@ class User < ApplicationRecord
   def photo_url
     url = read_attribute(:photo_url)
     url ? url : 'dummy-ava.png'
+  end
+
+  def update_login_token
+    t = login_token
+    if t
+      t.update_attributes({})
+    else
+      t = create_login_token
+    end
+    t
   end
 
   def draw
