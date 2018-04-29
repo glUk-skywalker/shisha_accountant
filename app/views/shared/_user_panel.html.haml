@@ -1,5 +1,5 @@
 .user-panel
-  = image_tag user.photo_url, class: 'ava'
+  = image_tag user.photo_url, class: 'ava', onerror: "this.src='#{asset_path('dummy-ava.png')}'"
   - if user.current_shisha
     = image_tag 'shisha-icon.png', class: 'smoking-badge', title: 'Smoking now'
   %span
