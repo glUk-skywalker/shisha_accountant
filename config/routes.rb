@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root to: 'users#show'
 
   match 'signin', to: 'sessions#new', via: :get, as: 'signin'
-  match 'auth', to: 'sessions#create', via: :get, as: 'auth'
+  match 'auth', to: 'sessions#create', via: [:get, :post], as: 'auth'
   match 'signout', to: 'sessions#destroy', via: :get, as: 'signout'
 
   resources :users, only: [:index, :edit, :update]

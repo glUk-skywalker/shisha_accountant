@@ -1,2 +1,8 @@
 #login-btn
   = login_button
+#token-form
+  - if flash[:error]
+    = flash[:error]
+  = form_for :login_token, url: auth_path do |f|
+    = f.text_field :token
+    = f.submit 'Login!'

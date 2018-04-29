@@ -4,11 +4,27 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.where(id: params[:id]).first
-    if user
-      user.update_attributes(user_params)
+    if params[:login_token]
+      t = LoginToken.where(token: params[:login_token][:token]).first
+      unless t
+        flash[:error] = 'The token you passed doesn\'t exist'
+        redirect_to signin_path
+        return
+      end
+      if (Time.now - t.updated_at) > Setting.login_token_expires_in
+        flash[:error] = 'The token you passed has expired'
+        redirect_to signin_path
+        return
+      end
+      user = t.user
+      t.destroy
     else
-      user = User.create(user_params)
+      user = User.where(id: params[:id]).first
+      if user
+        user.update_attributes(user_params)
+      else
+        user = User.create(user_params)
+      end
     end
     session[:current_user_id] = user.id
     redirect_to :root
