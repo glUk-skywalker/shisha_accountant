@@ -1,8 +1,10 @@
-#login-btn
-  = login_button
-#token-form
-  - if flash[:error]
-    = flash[:error]
-  = form_for :login_token, url: auth_path do |f|
-    = f.text_field :token
-    = f.submit 'Login!'
+#login-options
+  #telegram
+    = login_button
+  #separator
+  #token
+    - if flash[:error]
+      = flash[:error]
+    = form_for :login_token, url: auth_path do |f|
+      = f.text_field :token, placeholder: 'Place the login token here...'
+      = f.submit 'Login!'

@@ -7,12 +7,12 @@ class SessionsController < ApplicationController
     if params[:login_token]
       t = LoginToken.where(token: params[:login_token][:token]).first
       unless t
-        flash[:error] = 'The token you passed doesn\'t exist'
+        flash[:error] = 'The token you have passed doesn\'t exist'
         redirect_to signin_path
         return
       end
       if (Time.now - t.updated_at) > Setting.login_token_expires_in
-        flash[:error] = 'The token you passed has expired'
+        flash[:error] = 'The token you have passed has expired'
         redirect_to signin_path
         return
       end
