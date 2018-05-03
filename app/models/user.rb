@@ -10,6 +10,10 @@ class User < ApplicationRecord
     s.user_shishas.create(user_id: id, shisha_id: s.id)
   end
 
+  def join_shisha(shisha)
+    shisha.user_shishas.create(user_id: id, shisha_id: shisha.id)
+  end
+
   def current_shisha
     shishas.current.first
   end

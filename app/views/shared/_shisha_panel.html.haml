@@ -4,7 +4,10 @@
     - shisha.users.each do |u|
       = render 'shared/user_panel', user: u, show: [:first_name]
   .action
-    - if shisha.current
-      = link_to 'Stop smoking', stop_shisha_path(shisha), class: 'button'
+    - if shisha.current?
+      - if shisha == current_user.current_shisha
+        = link_to 'Stop smoking', shisha_stop_path(shisha), class: 'button'
+      - else
+        = link_to 'Join!', shisha_join_path(shisha), class: 'button'
     - else
       = "- #{shisha.price.to_f / shisha.users.length}"

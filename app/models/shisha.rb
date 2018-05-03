@@ -2,6 +2,7 @@ class Shisha < ApplicationRecord
   has_many :user_shishas, dependent: :destroy
   has_many :users, through: :user_shishas
   scope :current, -> { where(current: true) }
+  scope :finished, -> { where(current: false) }
   scope :joinable, -> { current.joins(:users).group('shishas.id').having('count(users.id) < ?', Setting.max_shisha_slots) }
 
   def stop!
@@ -13,6 +14,10 @@ class Shisha < ApplicationRecord
 
   def has_slots?
     users.length < Setting.max_shisha_slots
+  end
+
+  def joinable_for?(user)
+    current? && has_slots? && !users.include?(user)
   end
 
   def self.available?
