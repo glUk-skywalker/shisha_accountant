@@ -38,15 +38,9 @@ Telegram::Bot::Client.run(token) do |bot|
           s = Shisha.where(id: shisha_id).first
           user.action.join_shisha(s)
         when 'leave'
-          s = user.current_shisha
-          if s
-            UserShisha.where(user_id: user.id, shisha_id: s.id).first.destroy
-            s.destroy unless s.users.any?
-          end
+          user.action.leave_shisha
         when 'stop'
-          s = user.current_shisha
-          s.stop! if s
-          user.reload
+          user.action.stop_shisha
         when /accept_user:\d+/
           user_id = message.data.split(':').last
           User.find(user_id).update_attributes(allowed: true)
