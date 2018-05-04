@@ -2,8 +2,7 @@ def kb(user)
   return [button(:refresh)] unless user.allowed
   keyset = []
 
-  s = user.current_shisha
-  if s
+  if user.current_shisha
     keyset << [button(:leave), button(:finish)]
   else
     Shisha.joinable.each do |s|
