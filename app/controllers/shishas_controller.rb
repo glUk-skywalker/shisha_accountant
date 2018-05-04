@@ -13,9 +13,7 @@ class ShishasController < AuthenticatedUserController
   end
 
   def join
-    if @shisha && @shisha.joinable_for?(current_user)
-      current_user.join_shisha(@shisha)
-    end
+    current_user.action.join_shisha(@shisha)
     redirect_to request.referer
   end
 
@@ -30,6 +28,6 @@ class ShishasController < AuthenticatedUserController
   private
 
   def find_shisha
-    @shisha = Shisha.current.find(params[:shisha_id])
+    @shisha = Shisha.current.where(id: params[:shisha_id]).first
   end
 end

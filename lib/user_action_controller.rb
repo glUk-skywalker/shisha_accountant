@@ -9,12 +9,12 @@ class UserActionController
       UserShisha.create(user_id: @user.id, shisha_id: s.id)
     end
   end
-  #
-  # def join_shisha(shisha)
-  #   if shisha && shisha.joinable_for?(user)
-  #     UserShisha.create(user_id: id, shisha_id: shisha.id)
-  #   end
-  # end
+
+  def join_shisha(shisha)
+    if shisha && shisha.joinable_for?(@user)
+      UserShisha.create(user_id: @user.id, shisha_id: shisha.id)
+    end
+  end
   #
   #
   # def leave_shisha(shisha)
