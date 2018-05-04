@@ -11,4 +11,13 @@ module ApplicationHelper
     }
     Haml::Engine.new('%script' + params.to_s).render
   end
+
+  def not_allowed_user_message
+    <<~HEREDOC
+      Sorry.. You are not allowed to use this bot yet :(
+      The request on your participation has been sent to the owner.
+      Please, wait until he accepts it.
+      Thanks for you patience! :)
+    HEREDOC
+  end
 end
