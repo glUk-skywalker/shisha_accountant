@@ -1,9 +1,7 @@
 class ShishasController < AuthenticatedUserController
   before_action :find_shisha, only: [:stop, :join, :leave]
   def new
-    if Shisha.available? && !current_user.current_shisha
-      current_user.create_shisha
-    end
+    current_user.action.create_shisha
     redirect_to request.referer
   end
 

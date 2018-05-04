@@ -5,11 +5,6 @@ class User < ApplicationRecord
 
   after_create :request_accept_or_promote
 
-  def create_shisha
-    s = Shisha.create(price: Setting.default_price)
-    s.user_shishas.create(user_id: id, shisha_id: s.id)
-  end
-
   def join_shisha(shisha)
     shisha.user_shishas.create(user_id: id, shisha_id: shisha.id)
   end
@@ -31,6 +26,10 @@ class User < ApplicationRecord
       t = create_login_token
     end
     t
+  end
+
+  def action
+    @action_controller ||= UserActionController.new(self)
   end
 
   def draw

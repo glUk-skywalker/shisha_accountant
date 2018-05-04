@@ -32,9 +32,7 @@ Telegram::Bot::Client.run(token) do |bot|
       if user.allowed
         case message.data
         when 'create'
-          if Shisha.available? && !user.current_shisha
-            user.create_shisha
-          end
+          user.action.create_shisha
         when /join:\d+/
           shisha_id = message.data.split(':').last
           s = Shisha.where(id: shisha_id).first
