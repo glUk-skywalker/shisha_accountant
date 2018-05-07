@@ -1,14 +1,14 @@
 TYPES = {
   leave: {
-    text: "Leave",
-    callback_data: "leave"
+    text: 'Leave',
+    callback_data: 'leave'
   },
   finish: {
-    text: "Finish smoking",
-    callback_data: "stop"
+    text: 'Finish smoking',
+    callback_data: 'stop'
   },
   create: {
-    text: "Set up new!",
+    text: 'Set up new!',
     callback_data: 'create'
   },
   refresh: {

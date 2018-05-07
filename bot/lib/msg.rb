@@ -6,7 +6,7 @@ def msg(user)
     shisha_users = s.users
     if shisha_users.include?(user)
       other_users = shisha_users - [user]
-      msg_lines << (["You"] + other_users.map(&:first_name)).to_sentence
+      msg_lines << (['You'] + other_users.map(&:first_name)).to_sentence
     else
       msg_lines << shisha_users.map(&:first_name).to_sentence
     end
@@ -15,7 +15,7 @@ def msg(user)
   msg = if msg_lines.any?
     "Currently smoking:\n" + msg_lines.map{ |l| '◦ ' + l }.join("\n")
   else
-    "No one is smoking now"
+    'No one is smoking now'
   end
 
   msg << "\n\nMoney: #{user.money}"

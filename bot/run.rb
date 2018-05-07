@@ -1,11 +1,11 @@
-puts "Loading Rails env..."
+puts 'Loading Rails env...'
 require File.expand_path('../../config/environment', __FILE__)
-puts "Loaded!"
+puts 'Loaded!'
 
-puts "Connectiong to the db..."
+puts 'Connectiong to the db...'
 config = Rails.application.config.database_configuration[Rails.env]
 ActiveRecord::Base.establish_connection(config)
-puts "Connected!"
+puts 'Connected!'
 
 require 'telegram/bot'
 require './bot/lib/button'
