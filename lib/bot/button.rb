@@ -23,11 +23,17 @@ class Button
   end
 
   def self.join(shisha)
-    button_params = {
+    new {
       text: "Join #{shisha.users.map(&:first_name).to_sentence}",
       callback_data: "join:#{s.id}"
     }
-    new(button_params)
+  end
+
+  def self.accept_user(user)
+    new {
+      text: 'Accept',
+      callback_data: "accept_user:#{user.id}"
+    }
   end
 
   def self.static(type)
