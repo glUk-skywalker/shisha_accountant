@@ -1,22 +1,15 @@
 def kb(user)
-  return [button(:refresh)] unless user.allowed
   keyset = []
 
   if user.current_shisha
-    keyset << [button(:leave), button(:finish)]
+    keyset << [Buttons.static(:leave), Buttons.static(:finish)]
   else
     Shisha.joinable.each do |s|
-      button_params = {
-        text: "Join #{s.users.map(&:first_name).to_sentence}",
-        callback_data: "join:#{s.id}"
-      }
-      keyset << [
-        Telegram::Bot::Types::InlineKeyboardButton.new(button_params)
-      ]
+      keyset << [Buttons.join_shisha(s)]
     end
 
-    keyset << button(:create) if Shisha.available?
+    keyset << Buttons.static(:create) if Shisha.available?
   end
 
-  keyset << button(:refresh)
+  keyset << Buttons.static(:refresh)
 end

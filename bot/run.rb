@@ -8,7 +8,7 @@ ActiveRecord::Base.establish_connection(config)
 puts 'Connected!'
 
 require 'telegram/bot'
-require './bot/lib/button'
+require './bot/lib/buttons'
 require './bot/lib/kb'
 require './bot/lib/msg'
 
@@ -24,8 +24,7 @@ Telegram::Bot::Client.run(token) do |bot|
       processing_params = {
         chat_id: message.from.id,
         message_id: message.message.message_id,
-        text: '↻ Working...',
-        reply_markup: Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb(user))
+        text: '↻ Working...'
       }
       bot.api.edit_message_text(processing_params)
 
@@ -44,7 +43,6 @@ Telegram::Bot::Client.run(token) do |bot|
         when /accept_user:\d+/
           user_id = message.data.split(':').last
           User.find(user_id).update_attributes(allowed: true)
-        when '↻'
         end
       end
 
