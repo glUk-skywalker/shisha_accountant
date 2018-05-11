@@ -9,6 +9,7 @@ puts 'Connected!'
 
 require 'telegram/bot'
 require './bot/lib/buttons'
+require './bot/lib/message'
 require './bot/lib/kb'
 require './bot/lib/msg'
 
@@ -21,12 +22,8 @@ Telegram::Bot::Client.run(token) do |bot|
 
     case message
     when Telegram::Bot::Types::CallbackQuery
-      processing_params = {
-        chat_id: message.from.id,
-        message_id: message.message.message_id,
-        text: '↻ Working...'
-      }
-      bot.api.edit_message_text(processing_params)
+      user_message = Message.new(user, '↻ Working...')
+      user_message.update!(message.message.message_id)
 
       if user.allowed
         case message.data
@@ -46,8 +43,9 @@ Telegram::Bot::Client.run(token) do |bot|
         end
       end
 
-      markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb(user))
-      bot.api.edit_message_text(chat_id: message.from.id, message_id: message.message.message_id, text: msg(user), reply_markup: markup)
+      user_message.text = msg(user)
+      user_message.keys = kb(user)
+      user_message.update! message.message.message_id
     when Telegram::Bot::Types::Message
       case message.text
       when '/start'
