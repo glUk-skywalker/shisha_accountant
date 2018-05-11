@@ -20,7 +20,12 @@ class User < ApplicationRecord
 
   def update_login_token
     t = login_token
-    t ? t.update_attributes({}) : create_login_token
+    if t
+      t.update_attributes({})
+    else
+      t = create_login_token
+    end
+    t
   end
 
   def action
