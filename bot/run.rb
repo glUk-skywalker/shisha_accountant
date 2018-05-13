@@ -7,11 +7,7 @@ config = Rails.application.config.database_configuration[Rails.env]
 ActiveRecord::Base.establish_connection(config)
 puts 'Connected!'
 
-require 'telegram/bot'
-require './bot/lib/buttons'
-require './bot/lib/message'
-require './bot/lib/kb'
-require './bot/lib/msg'
+require './bot/lib/requires'
 
 token = Rails.application.secrets.bot_token
 

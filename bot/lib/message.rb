@@ -12,6 +12,16 @@ class Message
     new user
   end
 
+  def accept_user(user)
+    @text = user.first_name
+    @text << " #{user.last_name}" if user.last_name
+    @text << " (@#{user.username})" if user.username
+    @text << ' wants to join the party!'
+    @text = text
+    keys = Buttons.accept_user(user)
+    self
+  end
+
   def keys=(keys_set)
     @keys_makup = keys_set ? markup(keys_set) : nil
   end

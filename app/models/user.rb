@@ -53,25 +53,9 @@ class User < ApplicationRecord
   end
 
   def request_accept
-    require 'telegram/bot'
-
-    button_params = {
-      text: "Accept",
-      callback_data: "accept_user:#{id}"
-    }
-    button = Telegram::Bot::Types::InlineKeyboardButton.new(button_params)
-    markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: button)
-
-    text = first_name
-    text << " #{last_name}" if last_name
-    text << " (@#{username})" if username
-    text << " wants to join the party!"
-
-    token = Rails.application.secrets.bot_token
-    User.where(super_admin: true).each do |admin|
-      Telegram::Bot::Client.run(token) do |bot|
-        bot.api.send_message(chat_id: admin.id, text: text, reply_markup: markup)
-      end
+    require Rails.root.join('bot', 'requires')
+    User.super_admins.each do |admin|
+      Message.for(admin).accept_user(self).send!
     end
   end
 end
