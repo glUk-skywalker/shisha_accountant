@@ -38,6 +38,14 @@ class User < ApplicationRecord
     @decorator ||= UserDecorator.new(self)
   end
 
+  def add_money(amount)
+    self.money += amount
+    save
+    msg = Message.for self
+    msg.text = "You were credited for #{amount} RUR.\nCurrent: #{money} RUR"
+    msg.send!
+  end
+
   private
 
   def should_be_promoted?

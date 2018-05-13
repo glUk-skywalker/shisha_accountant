@@ -14,8 +14,7 @@ class UsersController < AuthenticatedUserController
 
   def update
     u = User.find(params[:id])
-    u.money = u.money + params[:user][:money].to_f
-    u.save
+    u.add_money(params[:user][:money].to_f)
     redirect_to users_path
   end
 end
