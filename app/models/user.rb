@@ -3,6 +3,8 @@ class User < ApplicationRecord
   has_many :shishas, through: :user_shishas
   has_one :login_token
 
+  scope :super_admins, -> { where(super_admin: true) }
+
   after_create :request_accept_or_promote
 
   def join_shisha(shisha)

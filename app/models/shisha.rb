@@ -6,10 +6,9 @@ class Shisha < ApplicationRecord
   scope :joinable, -> { current.joins(:users).group('shishas.id').having('count(users.id) < ?', Setting.max_shisha_slots) }
 
   def stop!
-    if current
-      pay_off!
-      update_attributes(current: false)
-    end
+    return unless current
+    pay_off!
+    update_attributes(current: false)
   end
 
   def has_slots?
