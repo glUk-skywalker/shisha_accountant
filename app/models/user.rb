@@ -3,7 +3,10 @@ class User < ApplicationRecord
   has_many :shishas, through: :user_shishas
   has_one :login_token
 
+  default_scope { where(allowed: true) }
   scope :super_admins, -> { where(super_admin: true) }
+  scope :smoking, -> { joins(:shishas).where('current=1').distinct('user.id') }
+  scope :ready, -> { all - smoking }
 
   after_create :request_accept_or_promote
 
