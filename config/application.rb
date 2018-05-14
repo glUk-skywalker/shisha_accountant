@@ -18,3 +18,5 @@ module ShishaAccountant
     # -- all .rb files in that directory are automatically loaded.
   end
 end
+
+require Rails.root.join('bot', 'requires')

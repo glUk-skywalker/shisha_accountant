@@ -64,7 +64,6 @@ class User < ApplicationRecord
   end
 
   def request_accept
-    require Rails.root.join('bot', 'requires')
     User.super_admins.each do |admin|
       Message.for(admin).accept_user(self).send!
     end

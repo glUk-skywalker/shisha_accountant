@@ -7,8 +7,6 @@ config = Rails.application.config.database_configuration[Rails.env]
 ActiveRecord::Base.establish_connection(config)
 puts 'Connected!'
 
-require './bot/lib/requires'
-
 token = Rails.application.secrets.bot_token
 
 Telegram::Bot::Client.run(token) do |bot|
