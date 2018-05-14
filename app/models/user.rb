@@ -49,6 +49,10 @@ class User < ApplicationRecord
     msg.send!
   end
 
+  def message
+    @message ||= Message.for self
+  end
+
   private
 
   def should_be_promoted?

@@ -18,7 +18,13 @@ class Message
     @text << " (@#{user.username})" if user.username
     @text << ' wants to join the party!'
     @text = text
-    keys = Buttons.accept_user(user)
+    self.keys = Buttons.accept_user(user)
+    self
+  end
+
+  def join_offer(owner, shisha)
+    @text = "#{owner.first_name} just set up a new shisha!"
+    self.keys = Buttons.join_shisha(shisha)
     self
   end
 
