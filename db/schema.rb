@@ -10,9 +10,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180428081234) do
+ActiveRecord::Schema.define(version: 20180514065352) do
 
-  create_table "login_tokens", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1" do |t|
+  create_table "login_tokens", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.decimal "user_id", precision: 10, null: false
     t.string "token", null: false
     t.datetime "created_at", null: false
@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 20180428081234) do
     t.boolean "allowed", default: false, null: false
     t.boolean "super_admin", default: false, null: false
     t.text "photo_url"
+    t.boolean "notify", default: false, null: false
   end
 
 end

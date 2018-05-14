@@ -7,6 +7,7 @@ class User < ApplicationRecord
   scope :super_admins, -> { where(super_admin: true) }
   scope :smoking, -> { joins(:shishas).where('current=1').distinct('user.id') }
   scope :ready, -> { all - smoking }
+  scope :notified, -> { where(notify: true) }
 
   after_create :request_accept_or_promote
 
