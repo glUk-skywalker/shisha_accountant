@@ -30,4 +30,10 @@ class UserActionController
     s.stop!
     @user.reload
   end
+
+  def set_notify(flag)
+    @user.update_attributes(notify: flag)
+    @user.message.text = "Notifications are #{flag ? 'ON' : 'OFF'}"
+    @user.message.send!
+  end
 end

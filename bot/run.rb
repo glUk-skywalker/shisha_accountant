@@ -54,6 +54,10 @@ Telegram::Bot::Client.run(token) do |bot|
         else
           bot.api.send_message(chat_id: message.from.id, text: 'You are not allowed user')
         end
+      when '/notifications_on'
+        user.action.set_notify(true)
+      when '/notifications_off'
+        user.action.set_notify(false)
       when '/stop'
         bot.api.send_message(chat_id: message.from.id, text: "Bye, #{message.from.first_name}")
       end
