@@ -18,5 +18,5 @@ def msg(user)
     'No one is smoking now'
   end
 
-  msg << "\n\nMoney: #{user.money}"
+  msg << "\n\nMoney: *#{user.money}* RUR"
 end

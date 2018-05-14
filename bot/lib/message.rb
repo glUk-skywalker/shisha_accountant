@@ -50,7 +50,8 @@ class Message
     {
       chat_id: @user.id,
       text: @text,
-      reply_markup: @keys_makup
+      reply_markup: @keys_makup,
+      parse_mode: 'Markdown'
     }
   end
 

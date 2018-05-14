@@ -46,7 +46,8 @@ class User < ApplicationRecord
     self.money += amount
     save
     return unless notify?
-    message.text = "You were credited for #{amount} RUR.\nCurrent: #{money} RUR"
+    text = "You were credited for *#{amount}* RUR.\nCurrent: *#{money}* RUR"
+    message.text = text
     message.send!
   end
 
