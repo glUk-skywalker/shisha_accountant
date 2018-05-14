@@ -4,31 +4,27 @@ class UserActionController
   end
 
   def create_shisha
-    if Shisha.available? && !@user.current_shisha
-      s = Shisha.create(price: Setting.default_price)
-      UserShisha.create(user_id: @user.id, shisha_id: s.id)
-    end
+    return unless Shisha.available? && !@user.current_shisha
+    s = Shisha.create(price: Setting.default_price)
+    UserShisha.create(user_id: @user.id, shisha_id: s.id)
   end
 
   def join_shisha(shisha)
-    if shisha && shisha.joinable_for?(@user)
-      UserShisha.create(user_id: @user.id, shisha_id: shisha.id)
-    end
+    return unless shisha&.joinable_for?(@user)
+    UserShisha.create(user_id: @user.id, shisha_id: shisha.id)
   end
 
   def leave_shisha
     s = @user.current_shisha
-    if s
-      UserShisha.where(user_id: @user.id, shisha_id: s.id).first.destroy
-      s.destroy unless s.users.any?
-    end
+    return unless s
+    UserShisha.where(user_id: @user.id, shisha_id: s.id).first.destroy
+    s.destroy unless s.users.any?
   end
 
   def stop_shisha
     s = @user.current_shisha
-    if s
-      s.stop!
-      @user.reload
-    end
+    return unless s
+    s.stop!
+    @user.reload
   end
 end
