@@ -7,7 +7,7 @@ class UserActionController
     return unless Shisha.available? && !@user.current_shisha
     s = Shisha.create(price: Setting.default_price)
     UserShisha.create(user_id: @user.id, shisha_id: s.id)
-    User.notified.each do |user|
+    User.notified.exclude(@user).each do |user|
       user.message.join_offer(@user, s).send!
     end
   end

@@ -9,6 +9,7 @@ class User < ApplicationRecord
   scope :ready, -> { all - smoking }
   scope :notified, -> { where(notify: true) }
   scope :debtors, -> { where('money < 0') }
+  scope :exclude, ->(*users) { where.not(id: users.map(&:id)) }
 
   after_create :request_accept_or_promote
 
