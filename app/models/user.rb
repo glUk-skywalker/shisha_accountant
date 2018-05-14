@@ -8,6 +8,7 @@ class User < ApplicationRecord
   scope :smoking, -> { joins(:shishas).where('current=1').distinct('user.id') }
   scope :ready, -> { all - smoking }
   scope :notified, -> { where(notify: true) }
+  scope :debtors, -> { where('money < 0') }
 
   after_create :request_accept_or_promote
 
@@ -53,6 +54,15 @@ class User < ApplicationRecord
 
   def message
     @message ||= Message.for self
+  end
+
+  def self.remind_debtors!
+    debtors.each do |debtor|
+      title = '*Reminder!*'
+      text = "Your account is in debt (*#{debtor.money}* RUR). Please, pay off."
+      debtor.message.text = title + "\n" + text
+      debtor.message.send!
+    end
   end
 
   private
