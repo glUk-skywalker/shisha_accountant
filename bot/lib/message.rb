@@ -46,9 +46,12 @@ class Message
   def history
     lines = []
     @user.shishas.each do |shisha|
-      line = shisha.created_at.strftime('%A, %d %B %Y, %H:%M')
-      line += ' '
+      price = shisha.price.to_f / shisha.users.length
+      line = '*-' + price.to_s + '* '
+      line += shisha.created_at.strftime('%A, %d %B %Y, %H:%M')
+      line += "\n"
       line += shisha.draw.participants(you: @user)
+      line += "\n"
       lines << line
     end
     @text = lines.join("\n")
