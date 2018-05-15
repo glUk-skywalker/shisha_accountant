@@ -23,6 +23,10 @@ class Shisha < ApplicationRecord
     Shisha.current.length < Setting.max_shisha_count
   end
 
+  def draw
+    @decorator ||= ShishaDecorator.new(self)
+  end
+
   private
 
   def pay_off!

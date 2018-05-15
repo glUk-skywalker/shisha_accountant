@@ -43,6 +43,18 @@ class Message
     self
   end
 
+  def history
+    lines = []
+    @user.shishas.each do |shisha|
+      line = shisha.created_at.strftime('%A, %d %B %Y, %H:%M')
+      line += ' '
+      line += shisha.draw.participants(you: @user)
+      lines << line
+    end
+    @text = lines.join("\n")
+    self
+  end
+
   def send!
     with_bot do |bot|
       bot.api.send_message(params)
