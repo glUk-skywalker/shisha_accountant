@@ -32,6 +32,17 @@ class Message
     @keys_makup = keys_set ? markup(keys_set) : nil
   end
 
+  def login_link
+    url_params = {
+      login_token: {
+        token: @user.update_login_token.token
+      },
+      host: Setting.host
+    }
+    @text = Rails.application.routes.url_helpers.auth_url(url_params)
+    self
+  end
+
   def send!
     with_bot do |bot|
       bot.api.send_message(params)
@@ -51,6 +62,7 @@ class Message
       chat_id: @user.id,
       text: @text,
       reply_markup: @keys_makup,
+      url: @url,
       parse_mode: 'Markdown'
     }
   end

@@ -47,10 +47,9 @@ Telegram::Bot::Client.run(token) do |bot|
       when '/menu'
         markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb(user))
         bot.api.send_message(chat_id: message.from.id, text: msg(user), reply_markup: markup)
-      when '/login_token'
+      when '/login_link'
         if user.allowed?
-          t = user.update_login_token
-          bot.api.send_message(chat_id: message.from.id, text: t.token)
+          user.message.login_link.send!
         else
           bot.api.send_message(chat_id: message.from.id, text: 'You are not allowed user')
         end
