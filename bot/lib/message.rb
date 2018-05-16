@@ -4,6 +4,7 @@ class Message
   def initialize(user, text = '', keys_set = nil)
     @user = user
     @text = text
+    @parse_mode = 'Markdown'
     @keys_makup = keys_set ? markup(keys_set) : nil
     @token = Rails.application.secrets.bot_token
   end
@@ -39,7 +40,9 @@ class Message
       },
       host: Setting.host
     }
-    @text = Rails.application.routes.url_helpers.auth_url(url_params)
+    url = Rails.application.routes.url_helpers.auth_url(url_params)
+    @parse_mode = 'HTML'
+    @text = "The link is valid for one minute or a single login!\n#{url}"
     self
   end
 
@@ -78,7 +81,7 @@ class Message
       text: @text,
       reply_markup: @keys_makup,
       url: @url,
-      parse_mode: 'Markdown'
+      parse_mode: @parse_mode
     }
   end
 
