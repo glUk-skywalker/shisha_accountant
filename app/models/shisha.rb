@@ -27,6 +27,19 @@ class Shisha < ApplicationRecord
     @decorator ||= ShishaDecorator.new(self)
   end
 
+  def self.remind_smokers!
+    shishas = current.where('created_at < ?', 1.hour.ago)
+    shishas.each do |shisha|
+      shisha.users.each do |user|
+        text = 'You are smoking for more then an hour already.'
+        text << "\nDon\' forget to stop the shisha!"
+        user.message.text = text
+        user.message.keys = Buttons.static(:finish)
+        user.message.send!
+      end
+    end
+  end
+
   private
 
   def pay_off!

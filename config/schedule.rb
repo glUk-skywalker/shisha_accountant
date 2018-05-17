@@ -22,3 +22,7 @@
 every '0 18 * * 1-5' do
   runner 'User.remind_debtors!'
 end
+
+every '* * * * *' do
+  runner 'Shisha.remind_smokers!'
+end
