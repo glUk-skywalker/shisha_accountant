@@ -57,7 +57,7 @@ class Message
       line += "\n"
       lines << line
     end
-    @text = lines.join("\n")
+    @text = lines.any? ? lines.join("\n") : 'You haven\'t smoked at all'
     self
   end
 
