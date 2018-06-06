@@ -29,6 +29,10 @@ class UserActionController
     return unless s
     s.stop!
     @user.reload
+    s.users.exclude(@user).notified.each do |user|
+      user.message.text = 'Your shisha has been stopped'
+      user.message.send!
+    end
   end
 
   def set_notify(flag)
