@@ -7,7 +7,7 @@ class User < ApplicationRecord
   default_scope { where(allowed: true) }
   scope :super_admins, -> { where(super_admin: true) }
   scope :smoking, -> { joins(:shishas).where('current=1').distinct('user.id') }
-  scope :ready, -> { all - smoking }
+  scope :ready, -> { exclude(*smoking.to_a) }
   scope :notified, -> { where(notify: true) }
   scope :debtors, -> { where('money < 0') }
   scope :exclude, ->(*users) { where.not(id: users.map(&:id)) }
