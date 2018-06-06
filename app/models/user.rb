@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_many :user_shishas, foreign_key: :user_id
   has_many :shishas, through: :user_shishas
   has_one :login_token
+  has_many :events
 
   default_scope { where(allowed: true) }
   scope :super_admins, -> { where(super_admin: true) }
@@ -45,8 +46,11 @@ class User < ApplicationRecord
   end
 
   def add_money(amount)
-    self.money += amount
-    save
+    ActiveRecord::Base.transaction do
+      self.money += amount
+      events.create(change: amount, current: money)
+      save
+    end
     return unless notify?
     text = "You were credited for *#{amount}* RUR.\nCurrent: *#{money}* RUR"
     message.text = text

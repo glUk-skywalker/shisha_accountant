@@ -7,8 +7,10 @@ class Shisha < ApplicationRecord
 
   def stop!
     return unless current
-    pay_off!
-    update_attributes(current: false)
+    ActiveRecord::Base.transaction do
+      pay_off!
+      update_attributes(current: false)
+    end
   end
 
   def has_slots?
@@ -46,6 +48,7 @@ class Shisha < ApplicationRecord
     v = price.to_f / users.length
     users.each { |u|
       u.update_attributes(money: u.money - v)
+      u.events.create(change: -v, current: u.money, shisha_id: id)
     }
   end
 end

@@ -48,16 +48,19 @@ class Message
 
   def history
     lines = []
-    @user.shishas.each do |shisha|
-      price = shisha.price.to_f / shisha.users.length
-      line = '*-' + price.to_s + '* '
-      line += shisha.created_at.strftime('%A, %d %B %Y, %H:%M')
-      line += "\n"
-      line += shisha.draw.participants(you: @user)
-      line += "\n"
+    @user.events.each do |event|
+      line = event.change.negative? ? '➖' : '➕'
+      line << ' ' + event.created_at.strftime('%A, %d %B %Y, %H:%M') + "\n"
+      line << "`#{event.change.to_s.rjust(6, ' ')}` RUR: "
+      if event.shisha_id
+        line << 'Smoking: ' + event.shisha.draw.participants(you: @user)
+      else
+        line << 'Credit'
+      end
+      line << "\nCurrent ballance: *#{event.current}* RUR\n"
       lines << line
     end
-    @text = lines.any? ? lines.join("\n") : 'You haven\'t smoked at all'
+    @text = lines.any? ? lines.join("\n") : 'Your history is empty'
     self
   end
 
