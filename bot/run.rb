@@ -45,8 +45,9 @@ Telegram::Bot::Client.run(token) do |bot|
       when '/start'
         bot.api.send_message(chat_id: message.from.id, text: "Hello, #{message.from.first_name}")
       when '/menu'
-        markup = Telegram::Bot::Types::InlineKeyboardMarkup.new(inline_keyboard: kb(user))
-        bot.api.send_message(chat_id: message.from.id, text: msg(user), reply_markup: markup)
+        user.message.text = msg(user)
+        user.message.keys = kb(user)
+        user.message.send!
       when '/login_link'
         if user.allowed?
           user.message.login_link.send!
