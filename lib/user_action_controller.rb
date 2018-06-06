@@ -13,7 +13,7 @@ class UserActionController
   end
 
   def join_shisha(shisha)
-    return unless shisha&.joinable_for?(@user)
+    return unless shisha&.joinable_for?(@user) && !@user.current_shisha
     UserShisha.create(user_id: @user.id, shisha_id: shisha.id)
   end
 
