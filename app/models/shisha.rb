@@ -13,6 +13,12 @@ class Shisha < ApplicationRecord
     end
   end
 
+  def append_users(ids)
+    ids.each do |user_id|
+      UserShisha.create(shisha_id: id, user_id: user_id)
+    end
+  end
+
   def has_slots?
     users.length < Setting.max_shisha_slots
   end
