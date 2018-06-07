@@ -1,0 +1,8 @@
+= form_for @shisha do |f|
+  = f.datetime_field :created_at
+  %ul
+    - @users.each do |user|
+      %li
+        = label_tag user.draw.name([:first_name, :last_name])
+        = check_box_tag 'users[]', user.id
+  = f.submit 'Create'

@@ -8,9 +8,10 @@ Rails.application.routes.draw do
 
   resources :users, only: [:index, :edit, :update]
 
-  resources :shishas, only: [:new] do
+  resources :shishas, only: [:new, :create] do
     get 'stop', to: 'shishas#stop', as: 'stop'
     get 'join', to: 'shishas#join', as: 'join'
     get 'leave', to: 'shishas#leave', as: 'leave'
   end
+  get 'custom_shisha', to: 'shishas#new_custom', as: 'new_custom'
 end
