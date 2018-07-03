@@ -9,9 +9,11 @@ class UserDecorator
 
   def name(show = [:first_name])
     items = []
-    items << @user.first_name if @user.first_name && show.include?(:first_name)
-    items << nick if @user.username && show.include?(:username)
-    items << @user.last_name if @user.last_name && show.include?(:last_name)
+    items << @user.first_name if show.include?(:first_name)
+    items << nick             if show.include?(:username)
+    items << @user.last_name  if show.include?(:last_name)
+    items.compact!
+    items.reject!(&:empty?)
     items.join(' ')
   end
 end
