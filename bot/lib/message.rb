@@ -49,15 +49,20 @@ class Message
   def history
     lines = []
     @user.events.each do |event|
-      line = event.change.negative? ? '➖' : '➕'
-      line << ' ' + event.created_at.strftime('%A, %d %B %Y, %H:%M') + "\n"
-      line << "`#{event.change.to_s.rjust(6, ' ')}` RUR: "
+      line = event.change.negative? ? '😤' : '💰'
+      line << " *#{event.change.negative? ? '' : '+'}#{event.change}* RUR -"
+      line << ' ' + event.created_at.strftime('%a, %d %B %Y, %H:%M') + "\n"
       if event.shisha_id
-        line << 'Smoking: ' + event.shisha.draw.participants(you: @user)
-      else
-        line << 'Credit'
+        line << '       Smoking '
+        mates = event.shisha.users.exclude(@user)
+        if mates.any?
+          line << 'with ' + mates.map(&:first_name).to_sentence
+        else
+          line << 'alone'
+        end
+        line << "\n"
       end
-      line << "\nCurrent ballance: *#{event.current}* RUR\n"
+      line << "       Ballance: *#{event.current}* RUR\n"
       lines << line
     end
     @text = lines.any? ? lines.join("\n") : 'Your history is empty'
