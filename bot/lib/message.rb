@@ -29,7 +29,6 @@ class Message
     self
   end
 
-
   def accept_user(user)
     @text = user.first_name
     @text << " #{user.last_name}" if user.last_name
@@ -67,15 +66,15 @@ class Message
     lines = []
     @user.events.each do |event|
       line = event.change.negative? ? '😤' : '💰'
-      line << " *#{event.change.negative? ? '' : '+'}#{event.change}* RUR -"
-      line << ' ' + event.created_at.strftime('%a, %d %B %Y, %H:%M') + "\n"
+      line << " *#{event.change.negative? ? '' : '+'}#{event.change}* RUR\n"
+      line << '       ' + event.created_at.strftime('%a, %d %B %Y, %H:%M') + "\n"
       if event.shisha_id
-        line << '       Smoking '
+        line << '       '
         mates = event.shisha.users.exclude(@user)
         if mates.any?
-          line << 'with ' + mates.map(&:first_name).to_sentence
+          line << 'With ' + mates.map(&:first_name).to_sentence
         else
-          line << 'alone'
+          line << 'Alone'
         end
         line << "\n"
       end
