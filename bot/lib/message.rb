@@ -13,6 +13,23 @@ class Message
     new user
   end
 
+  def menu
+    shishas = Shisha.current
+    if shishas.any?
+      msg_lines = []
+      shishas.each do |s|
+        price = Setting.default_price
+        msg_lines << "*#{price}* RUR: " + s.draw.participants(you: @user)
+      end
+      @text = "Currently smoking:\n" + msg_lines.map{ |l| '◦ ' + l }.join("\n")
+    else
+      @text = 'No one is smoking now'
+    end
+    @text << "\n\nMoney: *#{@user.money}* RUR"
+    self
+  end
+
+
   def accept_user(user)
     @text = user.first_name
     @text << " #{user.last_name}" if user.last_name

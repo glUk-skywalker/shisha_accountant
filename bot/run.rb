@@ -44,8 +44,7 @@ Telegram::Bot::Client.run(token) do |bot|
         accepted_user.message.send!
       end
 
-      user.message.text = msg(user)
-      user.message.keys = kb(user)
+      user.message.menu.keys = kb(user)
       user.message.update! message.message.message_id
     when Telegram::Bot::Types::Message
       unless user.allowed?
@@ -58,8 +57,7 @@ Telegram::Bot::Client.run(token) do |bot|
       when '/start'
         bot.api.send_message(chat_id: message.from.id, text: "Hello, #{message.from.first_name}")
       when '/menu'
-        user.message.text = msg(user)
-        user.message.keys = kb(user)
+        user.message.menu.keys = kb(user)
         user.message.send!
       when '/login_link'
         user.message.login_link.send!
