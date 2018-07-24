@@ -64,7 +64,10 @@ class Message
 
   def history
     lines = []
-    @user.events.each do |event|
+    lines << 'Showing the last five items'
+    lines << 'Check the web-interface for more'
+    lines << ''
+    @user.events.last(5).each do |event|
       line = event.change.negative? ? '😤' : '💰'
       line << " *#{event.change.negative? ? '' : '+'}#{event.change}* RUR\n"
       line << '       ' + event.created_at.strftime('%a, %d %B %Y, %H:%M') + "\n"
