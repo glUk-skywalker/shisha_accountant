@@ -48,7 +48,7 @@ class User < ApplicationRecord
   def change_money(amount, comment)
     ActiveRecord::Base.transaction do
       self.money += amount
-      events.create(change: amount, current: money)
+      events.create(change: amount, current: money, comment: comment)
       save
     end
     return unless notify?
