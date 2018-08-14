@@ -75,12 +75,14 @@ class Message
         line << '       '
         mates = event.shisha.users.exclude(@user)
         if mates.any?
-          line << 'With ' + mates.map(&:first_name).to_sentence
+          line << 'Smoking with ' + mates.map(&:first_name).to_sentence
         else
           line << 'Alone'
         end
-        line << "\n"
+      elsif event.comment
+        line << event.comment
       end
+      line << "\n"
       line << "       Ballance: *#{event.current}* RUR\n"
       lines << line
     end
