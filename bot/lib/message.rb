@@ -80,7 +80,7 @@ class Message
           line << 'Alone'
         end
       elsif event.comment
-        line << event.comment
+        line << '       ' + event.comment
       end
       line << "\n"
       line << "       Ballance: *#{event.current}* RUR\n"
