@@ -1,5 +1,0 @@
-= "Add money to #{@user.draw.name([:first_name, :username, :last_name])}" 
-= form_for @user do |f|
-  = f.label 'Value'
-  = f.text_field :money, value: 0
-  = f.submit 'Add'

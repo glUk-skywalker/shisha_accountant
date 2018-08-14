@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   resources :users, only: [:index] do
     get 'update_money', to: 'events#new', as: 'update_money'
+    resources :events, only: [:create]
   end
 
   resources :shishas, only: [:new] do

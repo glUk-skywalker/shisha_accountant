@@ -45,14 +45,16 @@ class User < ApplicationRecord
     @decorator ||= UserDecorator.new(self)
   end
 
-  def add_money(amount)
+  def change_money(amount, comment)
     ActiveRecord::Base.transaction do
       self.money += amount
       events.create(change: amount, current: money)
       save
     end
     return unless notify?
-    text = "You were credited for *#{amount}* RUR.\nCurrent: *#{money}* RUR"
+    text = "Your money have been changed for *#{amount}*."
+    text += "\nComment: _#{comment}_" unless comment.empty?
+    text += "\nCurrent: *#{money}* RUR"
     message.text = text
     message.send!
   end
