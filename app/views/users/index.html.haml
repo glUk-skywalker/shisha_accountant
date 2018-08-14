@@ -7,4 +7,4 @@
         .money{ class: u.money <= 0 ? 'negative' : '' }= u.money
       - if current_user.super_admin?
         %td
-          = link_to 'Put money', edit_user_path(u)
+          = link_to 'Put money', user_update_money_path(u)

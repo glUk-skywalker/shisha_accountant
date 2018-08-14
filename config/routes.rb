@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   match 'auth', to: 'sessions#create', via: [:get, :post], as: 'auth'
   match 'signout', to: 'sessions#destroy', via: :get, as: 'signout'
 
-  resources :users, only: [:index, :edit, :update]
+  resources :users, only: [:index] do
+    get 'update_money', to: 'events#new', as: 'update_money'
+  end
 
   resources :shishas, only: [:new] do
     get 'stop', to: 'shishas#stop', as: 'stop'
