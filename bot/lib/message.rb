@@ -69,20 +69,20 @@ class Message
     lines << ''
     @user.events.last(5).each do |event|
       line = event.change.negative? ? '😤' : '💰'
-      line << " *#{event.change.negative? ? '' : '+'}#{event.change}* RUR\n"
+      line << "*#{format('%+d', event.change)}* RUR\n"
       line << '       ' + event.created_at.strftime('%a, %d %B %Y, %H:%M') + "\n"
       if event.shisha_id
-        line << '       '
+        line << '       _'
         mates = event.shisha.users.exclude(@user)
         if mates.any?
           line << 'Smoking with ' + mates.map(&:first_name).to_sentence
         else
           line << 'Alone'
         end
+        line << "_\n"
       elsif event.comment
-        line << '       ' + event.comment
+        line << '       _' + event.comment + "_\n"
       end
-      line << "\n"
       line << "       Ballance: *#{event.current}* RUR\n"
       lines << line
     end
