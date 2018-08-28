@@ -18,4 +18,6 @@ Rails.application.routes.draw do
   end
 
   get 'history', to: 'events#index', as: 'history'
+
+  resources :global_events, only: [:index, :new, :create]
 end
