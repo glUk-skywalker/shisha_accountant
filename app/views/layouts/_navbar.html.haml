@@ -1,6 +1,8 @@
 #navbar
   = link_to 'Main', root_path, class: 'navitem'
-  = link_to 'Users', users_path, class: 'navitem' if current_user.super_admin?
+  - if current_user.super_admin?
+    = link_to 'Users', users_path, class: 'navitem'
+    = link_to 'Main spendings', global_events_path, class: 'navitem'
   = link_to(image_tag('logout-icon.png'), signout_path, class: 'navitem right logout', title: 'Logout') if current_user
   .navitem.right
     = current_user.money.to_s + ' RUR'

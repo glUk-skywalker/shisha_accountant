@@ -1,4 +1,6 @@
 class EventsController < AuthenticatedUserController
+  before_action :super_admin?, except: [:index]
+
   def new
     @user = User.find(params[:user_id])
     @event = @user.events.new
@@ -23,5 +25,10 @@ class EventsController < AuthenticatedUserController
 
   def event_params
     params.require(:event).permit([:change, :comment])
+  end
+
+  def super_admin?
+    return if current_user.super_admin?
+    render file: "#{Rails.root}/public/404", status: :not_found
   end
 end
