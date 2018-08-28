@@ -1,0 +1,13 @@
+- if @user_current_shisha
+  .shisha-list
+    = render 'shared/shisha_panel', shisha: @user_current_shisha
+- else
+  .shisha-list
+    - Shisha.joinable.each do |s|
+      = render 'shared/shisha_panel', shisha: s
+  - if Shisha.available?
+    = link_to 'Set up a new shisha!', new_shisha_path, class: 'button create-shisha-button'
+
+.shisha-list
+  - @events.each do |event|
+    = render 'shared/event_panel', event: event
