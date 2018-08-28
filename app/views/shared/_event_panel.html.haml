@@ -1,0 +1,11 @@
+%table.shisha-panel
+  %tr
+    %td.date= event.created_at.strftime("%A, %d %B %Y, %H:%M")
+    %td.users
+      - if event.shisha_id
+        - event.shisha.users.each do |u|
+          = render 'shared/user_panel', user: u, show: [:first_name]
+      - else
+        = event.comment
+    %td.action
+      = format('%+d', event.change)
