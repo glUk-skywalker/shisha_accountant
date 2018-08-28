@@ -1,15 +1,15 @@
-%table
-  %tr
-    %td{width: '400px'}
-      Current
-      = @events.map(&:change).inject('+')
-    %td= link_to "Add", new_global_event_path
-
+Current:
+%b= @events.map(&:change).inject('+')
+%br
+%br
+= link_to "Add", new_global_event_path
+%br
 %br
 %table
   %tbody
     - @events.each do |event|
       %tr
         %td= event.created_at
-        %td= event.change
+        %td
+          %b= event.change
         %td= event.comment
