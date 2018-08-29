@@ -3,6 +3,7 @@ class GlobalEventsController < AuthenticatedUserController
 
   def index
     @events = GlobalEvent.all.order(created_at: :desc)
+    @debt = User.debtors.map(&:money).inject('+')
   end
 
   def new

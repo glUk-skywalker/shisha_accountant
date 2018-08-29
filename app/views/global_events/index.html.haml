@@ -1,5 +1,10 @@
 Current:
-%b= @events.map(&:change).inject('+')
+- curr_money = @events.map(&:change).inject('+')
+%b= curr_money
+(
+= '+' + (-@debt).to_s + ' = '
+%b= curr_money + @debt * -1
+)
 %br
 %br
 = link_to "Add", new_global_event_path
@@ -9,7 +14,7 @@ Current:
   %tbody
     - @events.each do |event|
       %tr
-        %td= event.created_at
-        %td
+        %td{width: '300px'}= event.created_at.strftime("%A, %d %B %Y, %H:%M")
+        %td{width: '60px', align: 'right'}
           %b= event.change
-        %td= event.comment
+        %td{style: 'padding-left: 10px'}= event.comment
