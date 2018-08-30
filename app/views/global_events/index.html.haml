@@ -7,7 +7,12 @@ Current:
 )
 %br
 %br
-= link_to "Add", new_global_event_path
+= form_for @event do |f|
+  = f.label 'Value'
+  = f.text_field :change, value: 0
+  = f.label 'Comment'
+  = f.text_area :comment
+  = f.submit 'Add'
 %br
 %br
 %table
