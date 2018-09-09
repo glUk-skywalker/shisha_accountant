@@ -1,3 +1,14 @@
+begin
+  Process.kill(0, File.read('tmp/pids/bot.pid').to_i)
+  exit
+rescue
+  'Something wrong! Starting...'
+end
+
+File.open('tmp/pids/bot.pid', 'w') { |file|
+  file.puts Process.pid
+}
+
 puts 'Loading Rails env...'
 require File.expand_path('../../config/environment', __FILE__)
 puts 'Loaded!'
