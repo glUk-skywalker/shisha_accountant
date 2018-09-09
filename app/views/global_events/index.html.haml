@@ -1,11 +1,31 @@
-Current:
 - curr_money = @events.map(&:change).inject('+')
-%b= curr_money
-(
-= '+' + (-@debt).to_s + ' = '
-%b= curr_money + @debt * -1
-)
-%br
+%table
+  %tbody
+    %tr
+      %td
+        Current:
+      %td
+        %b= curr_money
+      %td
+      %td
+    %tr
+      %td
+      %td
+        = '+' + (-@debt).to_s
+      %td
+        = '='
+        %b= curr_money + @debt * -1
+      %td
+        (without debts)
+    %tr
+      %td
+      %td
+        = '+' + @free_spendings.to_s
+      %td
+        = '='
+        %b= curr_money + @debt * -1 + @free_spendings
+      %td
+        (without debts and free shishas)
 %br
 = form_for @event do |f|
   = f.label 'Value'
@@ -19,7 +39,7 @@ Current:
   %tbody
     - @events.each do |event|
       %tr
-        %td{width: '300px'}= event.created_at.strftime("%A, %d %B %Y, %H:%M")
+        %td{width: '350px'}= event.created_at.strftime("%A, %d %B %Y, %H:%M")
         %td{width: '60px', align: 'right'}
           %b= event.change
         %td{style: 'padding-left: 10px'}= event.comment

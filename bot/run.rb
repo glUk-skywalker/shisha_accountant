@@ -28,6 +28,8 @@ Telegram::Bot::Client.run(token) do |bot|
       case message.data
       when 'create'
         user.action.create_shisha
+      when 'create_free'
+        user.action.create_free_shisha
       when /join:\d+/
         shisha_id = message.data.split(':').last
         s = Shisha.where(id: shisha_id).first

@@ -73,12 +73,13 @@ class Message
       line << '       ' + event.created_at.strftime('%a, %d %B %Y, %H:%M') + "\n"
       if event.shisha_id
         line << '       _'
+        l = 'Alone'
+        l = '⚠️ FREE' if event.shisha.free?
         mates = event.shisha.users.exclude(@user)
         if mates.any?
-          line << 'Smoking with ' + mates.map(&:first_name).to_sentence
-        else
-          line << 'Alone'
+          l = 'Smoking with ' + mates.map(&:first_name).to_sentence
         end
+        line << l
         line << "_\n"
       elsif event.comment
         line << '       _' + event.comment + "_\n"

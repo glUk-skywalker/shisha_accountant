@@ -11,5 +11,6 @@ def kb(user)
     keyset << Buttons.static(:create) if Shisha.available?
   end
 
+  keyset << Buttons.static(:create_free) if user.super_admin?
   keyset << Buttons.static(:refresh)
 end

@@ -9,3 +9,4 @@
         = event.comment
     %td.action
       = format('%+d', event.change)
+      = '⚠ FREE' if event.shisha&.free?

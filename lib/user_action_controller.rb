@@ -12,6 +12,12 @@ class UserActionController
     end
   end
 
+  def create_free_shisha
+    s = Shisha.create(price: Setting.default_price, free: true)
+    UserShisha.create(user_id: @user.id, shisha_id: s.id)
+    s.stop!
+  end
+
   def join_shisha(shisha)
     return unless shisha&.joinable_for?(@user) && !@user.current_shisha
     UserShisha.create(user_id: @user.id, shisha_id: shisha.id)
