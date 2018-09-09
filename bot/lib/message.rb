@@ -29,6 +29,15 @@ class Message
     self
   end
 
+  def tools
+    @text = 'Tools'
+    keyset = []
+    keyset << Buttons.static(:create_free) if @user.super_admin?
+    keyset << Buttons.static(:menu)
+    self.keys = keyset
+    self
+  end
+
   def accept_user(user)
     @text = user.first_name
     @text << " #{user.last_name}" if user.last_name

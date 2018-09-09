@@ -55,6 +55,9 @@ Telegram::Bot::Client.run(token) do |bot|
         accepted_user.update_attributes(allowed: true)
         accepted_user.message.text = 'You have been accept for using this bot!'
         accepted_user.message.send!
+      when 'tools'
+        user.message.tools.update! message.message.message_id
+        next
       end
 
       user.message.menu.keys = kb(user)

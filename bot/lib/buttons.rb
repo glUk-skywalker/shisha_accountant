@@ -4,7 +4,9 @@ class Buttons
     finish:      { text: 'Pay and stop',    callback_data: 'stop' },
     create:      { text: 'Set up new!',     callback_data: 'create' },
     refresh:     { text: '↻',               callback_data: '↻' },
-    create_free: { text: 'Add free shisha', callback_data: 'create_free' }
+    create_free: { text: 'Add free shisha', callback_data: 'create_free' },
+    tools:       { text: 'Tools',           callback_data: 'tools' },
+    menu:        { text: 'Main menu',       callback_data: 'menu' }
   }.freeze
 
   def self.build(params)
