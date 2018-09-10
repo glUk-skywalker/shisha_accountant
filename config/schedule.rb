@@ -24,5 +24,5 @@ every '0 18 * * 1-5' do
 end
 
 every '* * * * *' do
-  runner 'Shisha.remind_smokers!'
+  runner 'Shisha.stop_old!'
 end
