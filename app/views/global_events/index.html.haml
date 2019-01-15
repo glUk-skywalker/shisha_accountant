@@ -2,30 +2,14 @@
 %table
   %tbody
     %tr
-      %td
-        Current:
-      %td
+      %td{ align: 'right' }
+        Actual:
+      %td{ align: 'right' }
         %b= curr_money
-      %td
-      %td
     %tr
-      %td
-      %td
-        = '+' + (-@debt).to_s
-      %td
-        = '='
-        %b= curr_money + @debt * -1
-      %td
-        (without debts)
-    %tr
-      %td
-      %td
-        = '+' + @free_spendings.to_s
-      %td
-        = '='
-        %b= curr_money + @debt * -1 + @free_spendings
-      %td
-        (without debts and free shishas)
+      %td{ align: 'right' }= '+' + @debt.to_s + ' debts: '
+      %td{ align: 'right' }
+        %b= curr_money + @debt
 %br
 = form_for @event do |f|
   = f.label 'Value'
