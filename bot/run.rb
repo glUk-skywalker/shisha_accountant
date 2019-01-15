@@ -53,7 +53,7 @@ Telegram::Bot::Client.run(token) do |bot|
         user_id = message.data.split(':').last
         accepted_user = User.find(user_id)
         accepted_user.update_attributes(allowed: true)
-        accepted_user.message.text = 'You have been accept for using this bot!'
+        accepted_user.message.text = 'You have been accepted for using this bot!'
         accepted_user.message.send!
       when 'tools'
         user.message.tools.update! message.message.message_id
