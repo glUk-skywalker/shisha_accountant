@@ -72,6 +72,15 @@ Telegram::Bot::Client.run(token) do |bot|
       case message.text
       when '/start'
         bot.api.send_message(chat_id: message.from.id, text: "Hello, #{message.from.first_name}")
+      when '/new'
+        unless user.allowed?
+          user.message.text = USER_NOT_ALLOWED_MESSAGE_TEXT
+          user.message.send!
+          next
+        end
+        user.action.create_shisha
+        user.message.menu.keys = kb(user)
+        user.message.send!
       when '/menu'
         user.message.menu.keys = kb(user)
         user.message.send!
