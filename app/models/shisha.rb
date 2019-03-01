@@ -42,6 +42,10 @@ class Shisha < ApplicationRecord
     end
   end
 
+  def self.price
+    GlobalEvent.spendings_sum.to_f / finished.count
+  end
+
   private
 
   def pay_off!

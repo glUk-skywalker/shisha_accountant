@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180830172424) do
+ActiveRecord::Schema.define(version: 20190220143706) do
 
   create_table "events", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.decimal "change", precision: 10
-    t.decimal "current", precision: 10
+    t.float "change", limit: 24
+    t.float "current", limit: 24
     t.integer "user_id"
     t.integer "shisha_id"
     t.datetime "created_at", null: false
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20180830172424) do
   end
 
   create_table "shishas", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
-    t.decimal "price", precision: 10, null: false
+    t.float "price", limit: 24, null: false
     t.boolean "current", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -73,7 +73,7 @@ ActiveRecord::Schema.define(version: 20180830172424) do
     t.string "last_name"
     t.string "username"
     t.string "language_code"
-    t.decimal "money", precision: 10, default: "0", null: false
+    t.float "money", limit: 24, default: 0.0, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "allowed", default: false, null: false

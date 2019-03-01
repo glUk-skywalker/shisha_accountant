@@ -8,5 +8,5 @@
       - else
         = event.comment
     %td.action
-      = format('%+d', event.change)
+      = event.change.round(2)
       = '⚠ FREE' if event.shisha&.free?

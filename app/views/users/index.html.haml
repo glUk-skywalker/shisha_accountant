@@ -4,7 +4,7 @@
       %td
         = render 'shared/user_panel', user: u, show: [:first_name, :username, :last_name]
       %td
-        .money{ class: u.money <= 0 ? 'negative' : '' }= u.money
+        .money{ class: u.money <= 0 ? 'negative' : '' }= u.money.round(2)
       - if current_user.super_admin?
         %td
           = link_to 'Put money', user_update_money_path(u)

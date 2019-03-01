@@ -5,7 +5,7 @@ class UserActionController
 
   def create_shisha
     return unless Shisha.available? && !@user.current_shisha
-    s = Shisha.create(price: Setting.default_price)
+    s = Shisha.create(price: Shisha.price)
     UserShisha.create(user_id: @user.id, shisha_id: s.id)
     User.ready.notified.each do |user|
       user.message.join_offer(@user, s).send!
@@ -13,7 +13,7 @@ class UserActionController
   end
 
   def create_free_shisha
-    s = Shisha.create(price: Setting.default_price, free: true)
+    s = Shisha.create(price: Shisha.price, free: true)
     UserShisha.create(user_id: @user.id, shisha_id: s.id)
     s.stop!
   end

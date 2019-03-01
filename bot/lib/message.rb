@@ -18,14 +18,13 @@ class Message
     if shishas.any?
       msg_lines = []
       shishas.each do |s|
-        price = Setting.default_price
-        msg_lines << "*#{price}* RUR: " + s.draw.participants(you: @user)
+        msg_lines << "*#{s.price.round(2)}* RUR: " + s.draw.participants(you: @user)
       end
-      @text = "Currently smoking:\n" + msg_lines.map{ |l| '◦ ' + l }.join("\n")
+      @text = "Currently smoking:\n" + msg_lines.map { |l| '◦ ' + l }.join("\n")
     else
       @text = 'No one is smoking now'
     end
-    @text << "\n\nMoney: *#{@user.money}* RUR"
+    @text << "\n\nMoney: *#{@user.money.round(2)}* RUR"
     self
   end
 
@@ -78,7 +77,7 @@ class Message
     lines << ''
     @user.events.last(5).each do |event|
       line = event.change.negative? ? '😤' : '💰'
-      line << "*#{format('%+d', event.change)}* RUR\n"
+      line << "*#{event.change.round(2)}* RUR\n"
       line << '       ' + event.created_at.strftime('%a, %d %B %Y, %H:%M') + "\n"
       if event.shisha_id
         line << '       _'
@@ -93,7 +92,7 @@ class Message
       elsif event.comment
         line << '       _' + event.comment + "_\n"
       end
-      line << "       Ballance: *#{event.current}* RUR\n"
+      line << "       Ballance: *#{event.current.round(2)}* RUR\n"
       lines << line
     end
     @text = lines.any? ? lines.join("\n") : 'Your history is empty'

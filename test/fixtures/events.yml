@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  change: 
+  current: 
+  user_id: 1
+  shisha_id: 1
+
+two:
+  change: 
+  current: 
+  user_id: 1
+  shisha_id: 1

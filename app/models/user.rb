@@ -54,7 +54,7 @@ class User < ApplicationRecord
     return unless notify?
     text = "Your money have been changed for *#{amount}*."
     text += "\nComment: _#{comment}_" unless comment.empty?
-    text += "\nCurrent: *#{money}* RUR"
+    text += "\nCurrent: *#{money.round(2)}* RUR"
     message.text = text
     message.send!
   end

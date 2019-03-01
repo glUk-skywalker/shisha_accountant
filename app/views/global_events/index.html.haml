@@ -7,9 +7,9 @@
       %td{ align: 'right' }
         %b= curr_money
     %tr
-      %td{ align: 'right' }= '+' + @debt.to_s + ' debts: '
+      %td{ align: 'right' }= '+' + @debt.round(2).to_s + ' debts: '
       %td{ align: 'right' }
-        %b= curr_money + @debt
+        %b= (curr_money + @debt).round(2)
 %br
 = form_for @event do |f|
   = f.label 'Value'

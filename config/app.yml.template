@@ -1,7 +1,6 @@
 # config/app.yml for rails-settings-cached
 defaults: &defaults
   max_shisha_count: 3
-  default_price: 120
   max_shisha_slots: 3
 development:
   <<: *defaults
