@@ -22,8 +22,9 @@ token = Rails.application.secrets.bot_token
 
 Telegram::Bot::Client.run(token) do |bot|
   bot.listen do |message|
-    user = User.unscoped.where(id: message.from.id).first
-    user ||= User.create(message.from.to_h)
+    user = User.unscoped.find_or_initialize_by(id: message.from.id)
+    user.assign_attributes(message.from.to_h)
+    user.save
 
     case message
     when Telegram::Bot::Types::CallbackQuery
