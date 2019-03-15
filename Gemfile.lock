@@ -160,6 +160,7 @@ GEM
     selenium-webdriver (3.11.0)
       childprocess (~> 0.5)
       rubyzip (~> 1.2)
+    socksify (1.7.1)
     spring (2.0.2)
       activesupport (>= 4.2)
     spring-watcher-listen (2.0.1)
@@ -222,6 +223,7 @@ DEPENDENCIES
   rails-settings-cached (~> 0.6.6)
   sass-rails (~> 5.0)
   selenium-webdriver
+  socksify (~> 1.7)
   spring
   spring-watcher-listen (~> 2.0.0)
   telegram-bot-ruby (~> 0.8.6.1)
@@ -235,4 +237,4 @@ RUBY VERSION
    ruby 2.5.0p0
 
 BUNDLED WITH
-   1.16.1
+   1.17.2
