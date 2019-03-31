@@ -66,7 +66,7 @@ class User < ApplicationRecord
   def self.remind_debtors!
     debtors.each do |debtor|
       title = '*Reminder!*'
-      text = "Your account is in debt (*#{debtor.money}* RUR). Please, pay off."
+      text = "Your account is in debt (*#{debtor.money.round(2)}* RUR). Please, pay off."
       debtor.message.text = title + "\n" + text
       debtor.message.send!
     end
