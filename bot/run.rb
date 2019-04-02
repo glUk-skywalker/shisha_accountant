@@ -22,79 +22,79 @@ token = Rails.application.secrets.bot_token
 
 Telegram::Bot::Client.run(token) do |bot|
   bot.listen do |message|
-    user = User.unscoped.find_or_initialize_by(id: message.from.id)
-    user.assign_attributes(message.from.to_h)
-    user.save
+    Thread.start(message) do |message|
+      user = User.unscoped.find_or_initialize_by(id: message.from.id)
+      user.assign_attributes(message.from.to_h)
+      user.save
 
-    case message
-    when Telegram::Bot::Types::CallbackQuery
-      user.message.text = '↻ Working..'
-      user.message.update!(message.message.message_id)
-
-      unless user.allowed?
-        user.message.text = USER_NOT_ALLOWED_MESSAGE_TEXT
+      case message
+      when Telegram::Bot::Types::CallbackQuery
+        user.message.text = '↻ Working..'
         user.message.update!(message.message.message_id)
-        next
-      end
 
-      case message.data
-      when 'create'
-        user.action.create_shisha
-      when 'create_free'
-        user.action.create_free_shisha
-      when /join:\d+/
-        shisha_id = message.data.split(':').last
-        s = Shisha.where(id: shisha_id).first
-        user.action.join_shisha(s)
-      when 'leave'
-        user.action.leave_shisha
-      when 'stop'
-        user.action.stop_shisha
-      when /accept_user:\d+/
-        user_id = message.data.split(':').last
-        accepted_user = User.find(user_id)
-        accepted_user.update_attributes(allowed: true)
-        accepted_user.message.text = 'You have been accepted for using this bot!'
-        accepted_user.message.send!
-      when 'tools'
-        user.message.tools.update! message.message.message_id
-        next
-      end
+        unless user.allowed?
+          user.message.text = USER_NOT_ALLOWED_MESSAGE_TEXT
+          user.message.update!(message.message.message_id)
+          next
+        end
 
-      user.message.menu.keys = kb(user)
-      user.message.update! message.message.message_id
-    when Telegram::Bot::Types::Message
-      unless user.allowed?
-        user.message.text = USER_NOT_ALLOWED_MESSAGE_TEXT
-        user.message.send!
-        next
-      end
+        case message.data
+        when 'create'
+          user.action.create_shisha
+        when /join:\d+/
+          shisha_id = message.data.split(':').last
+          s = Shisha.where(id: shisha_id).first
+          user.action.join_shisha(s)
+        when 'leave'
+          user.action.leave_shisha
+        when 'stop'
+          user.action.stop_shisha
+        when /accept_user:\d+/
+          user_id = message.data.split(':').last
+          accepted_user = User.find(user_id)
+          accepted_user.update_attributes(allowed: true)
+          accepted_user.message.text = 'You have been accepted for using this bot!'
+          accepted_user.message.send!
+        when 'tools'
+          user.message.tools.update! message.message.message_id
+          next
+        end
 
-      case message.text
-      when '/start'
-        bot.api.send_message(chat_id: message.from.id, text: "Hello, #{message.from.first_name}")
-      when '/new'
+        user.message.menu.keys = kb(user)
+        user.message.update! message.message.message_id
+      when Telegram::Bot::Types::Message
         unless user.allowed?
           user.message.text = USER_NOT_ALLOWED_MESSAGE_TEXT
           user.message.send!
           next
         end
-        user.action.create_shisha
-        user.message.menu.keys = kb(user)
-        user.message.send!
-      when '/menu'
-        user.message.menu.keys = kb(user)
-        user.message.send!
-      when '/login_link'
-        user.message.login_link.send!
-      when '/history'
-        user.message.history.send!
-      when '/notifications_on'
-        user.action.set_notify(true)
-      when '/notifications_off'
-        user.action.set_notify(false)
-      when '/stop'
-        bot.api.send_message(chat_id: message.from.id, text: "Bye, #{message.from.first_name}")
+
+        case message.text
+        when '/start'
+          bot.api.send_message(chat_id: message.from.id, text: "Hello, #{message.from.first_name}")
+        when '/new'
+          unless user.allowed?
+            user.message.text = USER_NOT_ALLOWED_MESSAGE_TEXT
+            user.message.send!
+            next
+          end
+          user.action.create_shisha
+          user.message.menu.keys = kb(user)
+          user.message.send!
+        when '/menu'
+          user.message.menu.keys = kb(user)
+          user.message.send!
+        when '/login_link'
+          user.message.login_link.send!
+        when '/history'
+          user.message.history.send!
+        when '/notifications_on'
+          user.action.set_notify(true)
+        when '/notifications_off'
+          user.action.set_notify(false)
+        when '/stop'
+          bot.api.send_message(chat_id: message.from.id, text: "Bye, #{message.from.first_name}")
+        end
       end
     end
   end

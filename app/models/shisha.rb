@@ -1,8 +1,6 @@
 class Shisha < ApplicationRecord
   has_many :user_shishas, dependent: :destroy
   has_many :users, through: :user_shishas
-  default_scope -> { where('free is null') }
-  scope :free, -> { unscoped.where('free is not null') }
   scope :current, -> { where(current: true) }
   scope :finished, -> { where(current: false) }
   scope :joinable, -> { current.joins(:users).group('shishas.id').having('count(users.id) < ?', Setting.max_shisha_slots) }
@@ -43,7 +41,7 @@ class Shisha < ApplicationRecord
   end
 
   def self.price
-    GlobalEvent.spendings_sum.to_f / finished.count
+    GlobalEvent.spendings_sum.to_f / finished.count * 0.5
   end
 
   private

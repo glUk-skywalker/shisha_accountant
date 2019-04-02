@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190220143706) do
+ActiveRecord::Schema.define(version: 20190402172925) do
 
   create_table "events", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.float "change", limit: 24
@@ -57,7 +57,6 @@ ActiveRecord::Schema.define(version: 20190220143706) do
     t.boolean "current", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean "free"
   end
 
   create_table "user_shishas", id: false, force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

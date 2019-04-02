@@ -5,7 +5,6 @@ class GlobalEventsController < AuthenticatedUserController
     @events = GlobalEvent.all.order(created_at: :desc)
     @event = GlobalEvent.new
     @debt = User.debtors.map(&:money).inject('+')&.abs || 0.0
-    @free_spendings = Shisha.free.map(&:price).inject('+')
   end
 
   def create

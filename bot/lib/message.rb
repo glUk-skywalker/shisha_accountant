@@ -31,7 +31,6 @@ class Message
   def tools
     @text = 'Tools'
     keyset = []
-    keyset << Buttons.static(:create_free) if @user.super_admin?
     keyset << Buttons.static(:menu)
     self.keys = keyset
     self
@@ -82,11 +81,8 @@ class Message
       if event.shisha_id
         line << '       _'
         l = 'Alone'
-        l = '⚠️ FREE' if event.shisha.free?
         mates = event.shisha.users.exclude(@user)
-        if mates.any?
-          l = 'Smoking with ' + mates.map(&:first_name).to_sentence
-        end
+        l = 'Smoking with ' + mates.map(&:first_name).to_sentence if mates.any?
         line << l
         line << "_\n"
       elsif event.comment
