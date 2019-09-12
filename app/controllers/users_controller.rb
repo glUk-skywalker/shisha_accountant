@@ -7,4 +7,18 @@ class UsersController < AuthenticatedUserController
   def index
     @users = User.all.order(money: :asc)
   end
+
+  def update
+    if current_user.super_admin?
+      user = User.find(params[:id])
+      user.update_attributes(allowed: user_params[:allowed])
+    end
+    redirect_to request.referer
+  end
+
+  private
+
+  def user_params
+    params.permit(:allowed)
+  end
 end

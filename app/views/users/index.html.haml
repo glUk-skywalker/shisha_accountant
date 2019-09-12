@@ -8,3 +8,5 @@
       - if current_user.super_admin?
         %td
           = link_to 'Put money', user_update_money_path(u)
+        %td
+          = link_to 'Block!', user_path(u, allowed: false), method: :patch, data: { confirm: 'Are you sure?' }
