@@ -1,19 +1,19 @@
-begin
-  Process.kill(0, File.read('tmp/pids/bot.pid').to_i)
-  exit
-rescue
-  'Something wrong! Starting...'
-end
+# begin
+#   Process.kill(0, File.read('tmp/pids/bot.pid').to_i)
+#   exit
+# rescue
+#   'Something wrong! Starting...'
+# end
 
-File.open('tmp/pids/bot.pid', 'w') { |file|
-  file.puts Process.pid
-}
+# File.open('tmp/pids/bot.pid', 'w') { |file|
+#   file.puts Process.pid
+# }
 
 puts 'Loading Rails env...'
 require File.expand_path('../../config/environment', __FILE__)
 puts 'Loaded!'
 
-puts 'Connectiong to the db...'
+puts 'Connecting to the db...'
 config = Rails.application.config.database_configuration[Rails.env]
 ActiveRecord::Base.establish_connection(config)
 puts 'Connected!'

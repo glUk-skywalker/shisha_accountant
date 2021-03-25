@@ -7,6 +7,6 @@
   .navitem.right
     = current_user.money.round(2).to_s + ' RUR'
   .navitem.right= current_user.first_name
-  = image_tag current_user.photo_url, alt: 'dummy-ava.png', class: 'navitem right ava', onerror: "this.src='#{asset_path('dummy-ava.png')}'"
+  = image_tag current_user.photo_url || asset_path('dummy-ava.png'), alt: 'dummy-ava.png', class: 'navitem right ava', onerror: "this.src='#{asset_path('dummy-ava.png')}'"
   - if current_user.current_shisha
     = image_tag 'shisha-icon.png', class: 'navitem right smoking-now-ico', title: 'Smoking now'

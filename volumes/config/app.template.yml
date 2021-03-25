@@ -2,9 +2,10 @@
 defaults: &defaults
   max_shisha_count: 3
   max_shisha_slots: 3
+  shisha_price_multiplier: 1
   login_token_expires_in: 60
-  host:
-  socks_url:
+  host: 0.0.0.0
+
 development:
   <<: *defaults
 

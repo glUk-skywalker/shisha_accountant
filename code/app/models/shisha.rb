@@ -41,7 +41,7 @@ class Shisha < ApplicationRecord
   end
 
   def self.price
-    GlobalEvent.spendings_sum.to_f / finished.count * 0.5
+    GlobalEvent.spendings_sum.to_f / finished.count * Setting.shisha_price_multiplier
   end
 
   private

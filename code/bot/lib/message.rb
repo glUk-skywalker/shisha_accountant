@@ -41,7 +41,7 @@ class Message
     @text << " #{user.last_name}" if user.last_name
     @text << " (@#{user.username})" if user.username
     @text << ' wants to join the party!'
-    @text = text
+    @text = text.gsub('_', '\_')
     self.keys = Buttons.accept_user(user)
     self
   end
