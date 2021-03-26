@@ -9,6 +9,7 @@ RUN apk update && apk add --no-cache \
   mariadb-dev \
   nodejs \
   tzdata \
+  shared-mime-info \
   && rm -fr /tmp/* /var/cache/apk/*
 
 RUN bundle
