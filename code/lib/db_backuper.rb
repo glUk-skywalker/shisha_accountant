@@ -11,6 +11,7 @@ class DBBackuper
 
   def bash_params
     [
+      "--host=#{@db_conf['host']}",
       "-u#{@db_conf['username']}",
       "-p#{@db_conf['password']}",
       '--default-character-set=utf8',
