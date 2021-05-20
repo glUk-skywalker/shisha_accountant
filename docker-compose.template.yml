@@ -21,6 +21,7 @@ services:
       - ./volumes/config/database.yml:/app/config/database.yml
       - ./volumes/config/secrets.yml:/app/config/secrets.yml
       - ./volumes/log:/app/log
+      - ./volumes/tmp:/app/tmp      
   web:
     build:
       context: .
@@ -35,3 +36,4 @@ services:
       - ./volumes/config/database.yml:/app/config/database.yml
       - ./volumes/config/secrets.yml:/app/config/secrets.yml
       - ./volumes/log:/app/log
+      - ./volumes/tmp:/app/tmp      
