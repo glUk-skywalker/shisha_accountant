@@ -5,3 +5,4 @@ volumes/log
 volumes/config/database.yml
 volumes/config/secrets.yml
 volumes/config/app.yml
+volumes/tmp/
