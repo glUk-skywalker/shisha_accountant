@@ -37,3 +37,16 @@ services:
       - ./volumes/config/secrets.yml:/app/config/secrets.yml
       - ./volumes/log:/app/log
       - ./volumes/tmp:/app/tmp      
+  service_daemon:
+    build:
+      context: .
+      dockerfile: ./docker.images/service_daemon.Dockerfile
+    depends_on:
+      - db
+    restart: unless-stopped
+    volumes:
+      - ./volumes/config/app.yml:/app/config/app.yml
+      - ./volumes/config/database.yml:/app/config/database.yml
+      - ./volumes/config/secrets.yml:/app/config/secrets.yml
+      - ./volumes/log:/app/log
+      - ./volumes/tmp:/app/tmp
