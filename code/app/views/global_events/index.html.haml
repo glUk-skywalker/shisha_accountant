@@ -1,25 +1,26 @@
-- curr_money = @events.map(&:change).inject('+')
-%table
-  %tbody
-    %tr
-      %td{ align: 'right' }
-        Actual:
-      %td{ align: 'right' }
-        %b= curr_money
-    %tr
-      %td{ align: 'right' }= '+' + @debt.round(2).to_s + ' debts: '
-      %td{ align: 'right' }
-        %b= (curr_money + @debt).round(2)
+.top-controls{style: 'overflow: hidden; width: 50%; margin: auto'}
+  - curr_money = @events.map(&:change).inject('+')
+  %table{ style: 'float: left' }
+    %tbody
+      %tr
+        %td{ align: 'right' }
+          Actual:
+        %td{ align: 'right' }
+          %b= curr_money
+      %tr
+        %td{ align: 'right' }= '+' + @debt.round(2).to_s + ' debts: '
+        %td{ align: 'right' }
+          %b= (curr_money + @debt).round(2)
+  = form_for @event, html: { style: 'float: right' } do |f|
+    = f.label 'Value'
+    = f.text_field :change, value: 0
+    %br
+    -# = f.label 'Comment'
+    = f.text_area :comment, placeholder: 'comment', style: 'width: 231px'
+    %br
+    = f.submit 'Add'
 %br
-= form_for @event do |f|
-  = f.label 'Value'
-  = f.text_field :change, value: 0
-  = f.label 'Comment'
-  = f.text_area :comment
-  = f.submit 'Add'
-%br
-%br
-%table
+%table{ style: 'width: 70%; margin: auto' }
   %tbody
     - @events.each do |event|
       %tr
