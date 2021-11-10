@@ -21,11 +21,9 @@ rescue
 end
 
 loop do
+  sleep 60
   next unless backup_now?
 
   DBBackuper.backup!
-
   File.open(TIME_FILEPATH, 'w') { |f| f.write Time.now.to_s }
-
-  sleep 60
 end
