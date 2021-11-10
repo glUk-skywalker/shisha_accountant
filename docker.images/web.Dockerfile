@@ -4,7 +4,7 @@ ENV RAILS_ENV development
 
 WORKDIR /app
 
-COPY ./code .
+COPY ./code/Gemfile* ./
 
 RUN apk update && apk add --no-cache \
   build-base \
